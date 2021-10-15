@@ -1,3 +1,13 @@
+# int idadeJoao = ? [valor entre 0,100]
+# int idadePedro = ? [valor entre 0,100]
+# if (idadeJoao > idadePedro) {
+# 	print("João é mais velho que Pedro”)
+# } else if (idadePedro > idadeJoao) {
+# 	print(“Pedro é mais velho que João")
+# } else {
+# 	print(“Eles têm a mesma idade")
+# }
+
 .data
 	askJoaoOld: .asciiz "Digite a idade de João: "
 	askPedroOld: .asciiz "Digite a idade de Pedro: "

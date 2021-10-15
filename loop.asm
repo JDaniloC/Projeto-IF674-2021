@@ -1,3 +1,18 @@
+# int a = ? [valor entre 0,100]
+# int b = ? [valor entre 0,100]
+# if (a == 0) {
+# 	STORE b;
+# } else {
+# 	while (b != 0) {
+# 		if (a > b) {
+# 			a = a - b
+# 		} else {
+# 			b = b - a
+# 		}
+# 	}
+# 	STORE a;
+# }
+
 .data
 	askFirstTxt: .asciiz "Digite o primeiro valor: "
 	askSecondTxt: .asciiz "Digite o segundo valor: "

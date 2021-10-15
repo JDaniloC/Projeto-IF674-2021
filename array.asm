@@ -1,3 +1,12 @@
+# int A[10] = ?;
+# for (int i=0; i<10; i++) {
+# 	if (i%2==0) {
+# 		A[i]=A[i]+A[i+1];
+# 	} else {
+# 		A[i]=A[i]*2;
+#	}
+# }
+
 .data
 	array: .word 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 	
@@ -12,7 +21,7 @@
 		mfhi $t1	# Guarda o resto no $t1
 		beq $t1, $zero, IsEven
 		IsOdd:
-			sll $t2, $t2, 1
+			sll $t2, $t2, 1 # array[$s1] * 2
 			sw $t2, 0($s1)
 			j Continue
 		IsEven:
