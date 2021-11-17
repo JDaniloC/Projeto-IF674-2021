@@ -76,6 +76,11 @@ module Cpu (
     wire [4:0]  RT;
     wire [15:0] IMMEDIATE;
 
+    // Fios de dados com 32 bits
+    
+    wire [31:0] sign_extend_16to32_out;
+    wire [31:0] shift_left_mult_4_out;
+
     // Bloco central
 
     CtrlUnit cpu_ctrl (
@@ -158,6 +163,96 @@ module Cpu (
         .Instr25_21(RS),
         .Instr20_16(RT),
         .Instr15_0(IMMEDIATE)
+    );
+
+    // Registradores  
+
+    Registrador pc (
+        .Clk(clock),
+        .Reset(reset),
+        .Load(pc_write),
+        .Entrada(pc_source_out),
+        
+        .Saida(pc_out)
+    );
+
+    Registrador memory_data (
+        .Clk(clock),
+        .Reset(reset),
+        .Entrada(memory_out),
+        .Load(mem_data_write),
+        
+        .Saida(memory_data_out)
+    );
+
+    Registrador high(
+        .Clk(clock),
+        .Reset(reset),
+        .Load(high_write),
+        .Entrada(mult_div_hi_out),
+
+        .Saida(hi_out)
+    );
+
+    Registrador low (
+        .Clk(clock),
+        .Reset(reset),
+        .Load(low_write),
+        .Entrada(mult_div_lo_out),
+        
+        .Saida(lo_out)
+    );
+
+    Registrador a_reg (
+        .Clk(clock),
+        .Reset(reset),
+        .Load(reg_write), 
+        .Entrada(reg_a_out),
+        
+        .Saida(a_out)
+    );
+
+    Registrador b_reg (
+        .Clk(clock),
+        .Reset(reset),
+        .Load(reg_write),
+        .Entrada(reg_b_out), 
+
+        .Saida(b_out)
+    );
+
+    Registrador ALUOut_(
+        .Clk(clock),
+        .Reset(reset),
+        ALUOutControl, // chart notation
+        ALU_out,
+        ALUOut_out
+    );
+
+    Registrador EPC_(
+        .Clk(clock),
+        .Reset(reset),
+        EPCWrite, // chart notation
+        ALU_out,
+        EPC_out
+    );
+
+    // Blocos de controle  
+
+    Mux2Bits AluScrA_(
+        .alu_src_a,
+        .pc_out,
+        .a_out,
+        .memory_data_out,
+        .alu_src_a_out
+    );
+
+    Mux2Bits AluScrB_(
+        .alu_scr_b,
+        .b_out,
+        .sign_extend_16to32_out,
+        .shift_left_mult_4_out,
+        .alu_scr_b_out
     );
 
 endmodule
