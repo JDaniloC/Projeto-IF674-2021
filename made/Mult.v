@@ -21,7 +21,7 @@ module Mult (
         if(reset == 1'b1) begin
             hi = 32'b0;
             lo = 32'b0;
-            mult_out = 1'b0
+            mult_out = 1'b0;
         end
 
         if(mult_in == 1'b1) begin
@@ -29,7 +29,7 @@ module Mult (
             comp = (~A + 1'b1);
             sub = {comp, 33'b0};
             product = {32'b0, B, 1'b0};
-            contador = 32;
+            counter = 32;
             mult_out = 1'b0;
         end
 
@@ -37,11 +37,11 @@ module Mult (
         case(product[1:0])
 
         2'b01: begin
-            product += add;
+            product = product + add;
         end
 
         2'b10: begin
-            product -= sub;
+            product = product - sub;
         end
 
         endcase
@@ -53,7 +53,7 @@ module Mult (
         end
 
         if(counter > 0) begin
-            counter -= 1;
+            counter = counter - 1;
         end
 
 
