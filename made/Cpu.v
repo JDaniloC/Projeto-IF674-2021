@@ -1,7 +1,7 @@
 module Cpu (
     input wire clock,
-    input wire reset,
-)
+    input wire reset
+);
     // Sinais de controle
 
     wire [2:0] I_or_D;
@@ -38,6 +38,11 @@ module Cpu (
     wire low_write;
     wire store_control;
     wire load_control;
+    
+    wire start_div;
+    wire stop_div;
+    wire start_multi;
+    wire stop_multi;
 
     // Fios de dados
 
@@ -67,6 +72,7 @@ module Cpu (
     wire [31:0] a_out;
     wire [31:0] b_out;
 
+    wire [31:0] mux_store_size_out;
     wire [31:0] shift_amount_out;
     wire [31:0] store_size_out;
     wire [4:0] shift_src_out;
@@ -104,11 +110,11 @@ module Cpu (
 
     // Parametros de controle
 
-    parameter NUMBER_4 = d'4;
-    parameter NUMBER_16 = d'16;
-    parameter NUMBER_227 = d'227;
-    parameter REG_30 = d'30;
-    parameter REG_31 = d'31;
+    parameter NUMBER_4 = 32'd4;
+    parameter NUMBER_16 = 5'd16;
+    parameter NUMBER_227 = 32'd227;
+    parameter REG_30 = 32'd30;
+    parameter REG_31 = 32'd31;
 
     // Bloco central
 
@@ -174,7 +180,31 @@ module Cpu (
         .Instr31_26(OPCODE),
         .Instr25_21(RS),
         .Instr20_16(RT),
-        .Instr15_0(IMMEDIATE)
+        .Instr15_0(IMMEDIATE),
+    );
+
+    // Multi e Div
+
+    Div divisor (
+        .clock(clock),
+        .reset(reset),
+        .A(div_src_a_out),
+        .B(div_src_b_out),
+        .HI(mult_div_hi_out),
+        .LO(mult_div_lo_out),
+        .div_0(start_div),
+        .div_stop(stop_div),
+    );
+    
+    Multi multiplicador (
+        .clock(clock),
+        .reset(reset),
+        .A(a_out),
+        .B(b_out),
+        .HI(mult_div_hi_out),
+        .LO(mult_div_lo_out),
+        .mult_in(start_multi),
+        .mult_out(stop_multi)
     );
 
     // Registradores  
@@ -255,9 +285,9 @@ module Cpu (
         .Clk(clock),
         .Reset(reset),
         .Load(store_control),
-        .Entrada(store_size_write),
+        .Entrada(mux_store_size_out),
         
-        .Saida(store_size_out)
+        .Saida(store_size_out),
     );
    
     Registrador load_size_reg (
@@ -275,7 +305,16 @@ module Cpu (
         .seletor(alu_src_a),
         .data_0(pc_out),
         .data_1(a_out),
+
         .data_output(alu_src_a_out),
+    );
+    
+    Mux2Bits mux_store_size (
+        .seletor(store_size_write),
+        .data_0(b_out),
+        .data_1(memory_data_out),
+
+        .data_output(mux_store_size_out),
     );
 
     Mux4Bits mux_alu_src_b (
@@ -284,6 +323,7 @@ module Cpu (
         .data_1(NUMBER_4),
         .data_2(shift_left_16_out),
         .data_3(shift_right_2_out),
+
         .data_output(alu_src_b_out)
     );
     
@@ -291,6 +331,7 @@ module Cpu (
         .seletor(div_src_a),
         .data_0(pc_out),
         .data_1(a_out),
+
         .data_output(div_src_a_out),
     );
 
@@ -298,14 +339,16 @@ module Cpu (
         .seletor(div_src_b),
         .data_0(memory_out),
         .data_1(b_out),
-        .data_output(div_src_b_out)
+
+        .data_output(div_src_b_out),
     );
     
     Mux2Bits mux_pc_control (
         .seletor(pc_control),
         .data_0(pc_source_out),
         .data_1(a_out),
-        .data_output(pc_control_out)
+
+        .data_output(pc_control_out),
     );
 
     Mux4Bits mux_i_or_d (
@@ -314,6 +357,7 @@ module Cpu (
         .data_1(alu_out),
         .data_2(from_div),
         .data_3(exp_out),
+
         .data_output(i_or_d_out),
     );
 
@@ -323,6 +367,7 @@ module Cpu (
         .data_1(b_out),
         .data_2(IMMEDIATE),
         .data_3(a_out),
+
         .data_output(shift_src_out),
     );
 
@@ -332,6 +377,7 @@ module Cpu (
         .data_1(memory_data_out),
         .data_2(b_out),
         .data_3(IMMEDIATE),
+
         .data_output(shift_amount_out),
     );
 
@@ -341,6 +387,7 @@ module Cpu (
         .data_1(alu_reg_out),
         .data_2(28_to_32_out),
         .data_3(epc_out),
+        
         .data_output(pc_source_out),
     );
 
@@ -350,6 +397,7 @@ module Cpu (
         .data_1(REG_31),
         .data_2(REG_30),
         .data_3(IMMEDIATE),
+
         .data_output(reg_dist_out),
     );
 
@@ -363,6 +411,7 @@ module Cpu (
         .data_5(shift_reg_out),
         .data_6(extend_immediate_out),
         .data_7(NUMBER_227),
+
         .data_output(mem_to_reg_out),
     );
 
@@ -370,12 +419,12 @@ module Cpu (
 
     SignExtend1 extend_ula (
         .data_in(alu_out),
-        .data_out(extend_ula_out)
+        .data_out(extend_ula_out),
     );
 
     SignExtend16 extend_immediate (
         .data_in(IMMEDIATE),
-        .data_out(extend_immediate_out)
+        .data_out(extend_immediate_out),
     );
 
 endmodule
