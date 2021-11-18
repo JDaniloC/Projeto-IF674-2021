@@ -11,6 +11,8 @@ module Cpu (
     wire read_or_write;
     wire mem_data_write;
     
+    wire store_size_write;
+    
     wire pc_write;
     wire pc_control;
     wire [2:0] pc_source;
@@ -34,43 +36,54 @@ module Cpu (
 
     wire high_write;
     wire low_write;
+    wire store_control;
+    wire load_control;
 
     // Fios de dados
 
     wire [31:0] memory_out;
     wire [31:0] memory_data_out;
+    wire [31:0] load_size_out;
     
     wire [31:0] pc_source_out;
+    wire [31:0] pc_control_out;
     wire [31:0] pc_out;
     wire [31:0] epc_out;
     wire [31:0] exp_out;
     wire [31:0] i_or_d_out;
 
+    wire [31:0] alu_out_reg_out;
     wire [31:0] alu_src_a_out;
     wire [31:0] alu_src_b_out;
+    wire [31:0] shift_reg_out;
     wire [31:0] alu_reg_out;
     wire [31:0] alu_out;
     
     wire [4:0] reg_dist_out;
-    wire [31:0] data_src_out;
+    wire [31:0] mem_to_reg_out;
     
     wire [31:0] reg_a_out;
     wire [31:0] reg_b_out;
     wire [31:0] a_out;
     wire [31:0] b_out;
 
-    wire [31:0] ss_out;
-    wire [4:0] shift_src_out;
     wire [31:0] shift_amount_out;
+    wire [31:0] store_size_out;
+    wire [4:0] shift_src_out;
     
     wire [31:0] hi_out;
     wire [31:0] lo_out;
     wire [31:0] mult_div_hi_out;
     wire [31:0] mult_div_lo_out;
+    wire [31:0] div_src_a;
+    wire [31:0] div_src_a_out;
+    wire [31:0] div_src_b;
+    wire [31:0] div_src_b_out;
 
     wire [31:0] sign_extend_16to32_out;
     wire [31:0] shift_left_16_out;
     wire [31:0] shift_right_2_out;
+    wire [31:0] extend_ula_1_out;
     wire [31:0] 28_to_32_out;
 
     // Resultados da ULA
@@ -89,38 +102,29 @@ module Cpu (
     wire [4:0]  RT;
     wire [15:0] IMMEDIATE;
 
+    // Parametros de controle
+
+    parameter NUMBER_4 = d'4;
+    parameter NUMBER_16 = d'16;
+    parameter NUMBER_227 = d'227;
+    parameter REG_30 = d'30;
+    parameter REG_31 = d'31;
+
     // Bloco central
 
     CtrlUnit cpu_ctrl (
         .clock(clock),
-        .reset(reset),
-        .I_or_D(I_or_D),
-        .alu_op(alu_op),
-        .ir_write(ir_write),
-        .pc_write(pc_write),
-        .reg_write(reg_write),
-        .pc_source(pc_source),
-        .alu_src_a(alu_src_a),
-        .alu_src_b(alu_src_b),
-        .mem_to_reg(mem_to_reg),
-        .pc_control(pc_control),
-        .div_or_mult(div_or_mult),
-        .div_control(div_control)
-        .exp_control(exp_control),
-        .alu_control(alu_control),
-        .reg_dist_ctrl(reg_dist_ctrl),
-        .shift_control(shift_control),
-        .read_or_write(read_or_write),
+        .reset(reset)
     );
 
     // Blocos dados
 
     Memoria memory (
         .clock(clock),
-        .address(I_or_D),
         .wr(read_or_write),
+        .address(i_or_d_out),
         
-        .data_in(ss_out),
+        .data_in(store_size_out),
         .data_out(memory_out)
     );
 
@@ -145,7 +149,7 @@ module Cpu (
         .Shift(shift_control),
         .Entrada(shift_src_out),
 
-        .Saida(Shift_reg_out)
+        .Saida(shift_reg_out)
     );
 
     Banco_reg banco_reg (
@@ -155,7 +159,7 @@ module Cpu (
         .ReadReg2(RT),
         .RegWrite(reg_write),
         .WriteReg(reg_dist_out),
-        .WriteData(data_src_out),
+        .WriteData(mem_to_reg_out),
         
         .ReadData1(reg_a_out),
         .ReadData2(reg_b_out)
@@ -179,7 +183,7 @@ module Cpu (
         .Clk(clock),
         .Reset(reset),
         .Load(pc_write),
-        .Entrada(pc_source_out),
+        .Entrada(pc_control_out),
         
         .Saida(pc_out)
     );
@@ -193,7 +197,7 @@ module Cpu (
         .Saida(memory_data_out)
     );
 
-    Registrador high(
+    Registrador high (
         .Clk(clock),
         .Reset(reset),
         .Load(high_write),
@@ -232,22 +236,40 @@ module Cpu (
     Registrador alu_out_reg (
         .Clk(clock),
         .Reset(reset),
-        .Load(alu_out_control),
         .Entrada(alu_reg_out),
+        .Load(alu_out_control),
         
-        .Saida(alu_out)
+        .Saida(alu_out_reg_out)
     );
 
     Registrador epc_reg (
         .Clk(clock),
         .Reset(reset),
         .Load(epc_write),
-        .Entrada(alu_reg_out),
+        .Entrada(alu_out_reg_out),
         
         .Saida(epc_out)
     );
 
-    // Blocos de controle  
+    Registrador store_size_reg (
+        .Clk(clock),
+        .Reset(reset),
+        .Load(store_control),
+        .Entrada(store_size_write),
+        
+        .Saida(store_size_out)
+    );
+   
+    Registrador load_size_reg (
+        .Clk(clock),
+        .Reset(reset),
+        .Load(load_control),
+        .Entrada(memory_data_out),
+        
+        .Saida(load_size_out)
+    );
+
+    // Blocos de controle
 
     Mux2Bits mux_alu_src_a (
         .seletor(alu_src_a),
@@ -259,10 +281,31 @@ module Cpu (
     Mux4Bits mux_alu_src_b (
         .seletor(alu_scr_b),
         .data_0(b_out),
-        .data_1(2'b11),
+        .data_1(NUMBER_4),
         .data_2(shift_left_16_out),
         .data_3(shift_right_2_out),
-        .data_output(alu_scr_b_out)
+        .data_output(alu_src_b_out)
+    );
+    
+    Mux2Bits mux_div_src_a (
+        .seletor(div_src_a),
+        .data_0(pc_out),
+        .data_1(a_out),
+        .data_output(div_src_a_out),
+    );
+
+    Mux2Bits mux_div_src_b (
+        .seletor(div_src_b),
+        .data_0(memory_out),
+        .data_1(b_out),
+        .data_output(div_src_b_out)
+    );
+    
+    Mux2Bits mux_pc_control (
+        .seletor(pc_control),
+        .data_0(pc_source_out),
+        .data_1(a_out),
+        .data_output(pc_control_out)
     );
 
     Mux4Bits mux_i_or_d (
@@ -285,10 +328,10 @@ module Cpu (
 
     Mux4Bits mux_shift_amount (
         .seletor(shift_amount_control),
-        .data_0(2'b10000),
+        .data_0(NUMBER_16),
         .data_1(memory_data_out),
         .data_2(b_out),
-        .data_3(IMMEDIATE), // This is less
+        .data_3(IMMEDIATE),
         .data_output(shift_amount_out),
     );
 
@@ -298,16 +341,41 @@ module Cpu (
         .data_1(alu_reg_out),
         .data_2(28_to_32_out),
         .data_3(epc_out),
-        .data_output(PCSource_out),
+        .data_output(pc_source_out),
     );
 
     Mux4Bits reg_dist (
         .seletor(reg_dist_ctrl),
-        .data_0(RS),
-        .data_1(10'31),
-        .data_2(10'30),
+        .data_0(RT),
+        .data_1(REG_31),
+        .data_2(REG_30),
         .data_3(IMMEDIATE),
         .data_output(reg_dist_out),
+    );
+
+    Mux8Bits mux_mem_to_reg (
+        .seletor(mem_to_reg),
+        .data_0(alu_out),
+        .data_1(load_size_out),
+        .data_2(hi_out),
+        .data_3(lo_out),
+        .data_4(extend_ula_1_out),
+        .data_5(shift_reg_out),
+        .data_6(extend_immediate_out),
+        .data_7(NUMBER_227),
+        .data_output(mem_to_reg_out),
+    );
+
+    // Extends
+
+    SignExtend1 extend_ula (
+        .data_in(alu_out),
+        .data_out(extend_ula_out)
+    );
+
+    SignExtend16 extend_immediate (
+        .data_in(IMMEDIATE),
+        .data_out(extend_immediate_out)
     );
 
 endmodule
