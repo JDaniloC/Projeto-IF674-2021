@@ -13,16 +13,17 @@ module Mux8Bits (
     output wire [31:0] data_output
 );
 
+
     reg data;
 
-    if(selector == 3'b000) data = data_0;
-    if(selector == 3'b001) data = data_1;
-    if(selector == 3'b010) data = data_2;
-    if(selector == 3'b011) data = data_3;
-    if(selector == 3'b100) data = data_4;
-    if(selector == 3'b101) data = data_5;
-    if(selector == 3'b110) data = data_6;
-    if(selector == 3'b111) data = data_7;
+    if(selector == 3'b000) assign data = data_0;
+    if(selector == 3'b001) assign data = data_1;
+    if(selector == 3'b010) assign data = data_2;
+    if(selector == 3'b011) assign data = data_3;
+    if(selector == 3'b100) assign data = data_4;
+    if(selector == 3'b101) assign data = data_5;
+    if(selector == 3'b110) assign data = data_6;
+    if(selector == 3'b111) assign data = data_7;
  
     assign data_output = data;
     
