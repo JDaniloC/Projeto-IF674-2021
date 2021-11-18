@@ -7,8 +7,6 @@ module Mux8Bits (
     input  wire [31:0] data_4,
     input  wire [31:0] data_5,
     input  wire [31:0] data_6,
-    input  wire [31:0] data_5,
-    input  wire [31:0] data_6,
     input  wire [31:0] data_7,
     output wire [31:0] data_output
 );
