@@ -11,18 +11,26 @@ module Mux8Bits (
     output wire [31:0] data_output
 );
 
+    parameter IS_DATA_0 = 3'b000;
+    parameter IS_DATA_1 = 3'b001;
+    parameter IS_DATA_2 = 3'b010;
+    parameter IS_DATA_3 = 3'b011;
+    parameter IS_DATA_4 = 3'b100;
+    parameter IS_DATA_5 = 3'b101;
+    parameter IS_DATA_6 = 3'b110;
+    parameter IS_DATA_7 = 3'b111;
 
     reg data;
 
-    if(selector == 3'b000) assign data = data_0;
-    if(selector == 3'b001) assign data = data_1;
-    if(selector == 3'b010) assign data = data_2;
-    if(selector == 3'b011) assign data = data_3;
-    if(selector == 3'b100) assign data = data_4;
-    if(selector == 3'b101) assign data = data_5;
-    if(selector == 3'b110) assign data = data_6;
-    if(selector == 3'b111) assign data = data_7;
+    if (selector == IS_DATA_0) assign data = data_0;
+    if (selector == IS_DATA_1) assign data = data_1;
+    if (selector == IS_DATA_2) assign data = data_2;
+    if (selector == IS_DATA_3) assign data = data_3;
+    if (selector == IS_DATA_4) assign data = data_4;
+    if (selector == IS_DATA_5) assign data = data_5;
+    if (selector == IS_DATA_6) assign data = data_6;
+    if (selector == IS_DATA_7) assign data = data_7;
  
     assign data_output = data;
-    
+
 endmodule
