@@ -7,16 +7,16 @@ module Div(
   output reg [31:0] HI,
   output reg [31:0] LO,
   output reg div_0,
-  output reg div_stop,
-);
-  integer counter = 32;
+  output reg div_stop);
+
+    integer counter = 32;
 	reg [64:0] quotient = 0;
 	reg [31:0] rest ;
 	reg [31:0] dividend; // dividendo
 	reg [31:0] divider; // divider
 
 
-	always @(posedge clk) begin
+	always @(posedge clock) begin
 		if (counter == 32) begin
 			divider = B;
 			dividend = A;
@@ -43,19 +43,19 @@ module Div(
 
 		divider = divider >> 1;
 
-		if (contador > 0) begin
-			contador = (contador - 1);
+		if (counter > 0) begin
+			counter = (counter - 1);
 		end
 
-		if (contador == 0) begin
+		if (counter == 0) begin
 			//seta as saidas
 			HI = quotient[64:33];
 			LO = quotient[32:1];
 			div_stop = 0;
-			contador = -1;
+			counter = -1;
 		end
 		
-		if(contador == -1) begin
+		if(counter == -1) begin
 			rest = 32'b0;
 			quotient = 65'b0;
 		end
