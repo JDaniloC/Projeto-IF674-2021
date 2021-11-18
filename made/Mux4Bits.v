@@ -6,15 +6,5 @@ module Mux4Bits (
     input  wire [31:0] data_3,
     output wire [31:0] data_output
 );
-
-    reg data; 
-
-    if(selector == 2'b00) data = data_0;
-    if(selector == 2'b01) data = data_1;
-    if(selector == 2'b10) data = data_2;
-    if(selector == 2'b11) data = data_3;
-
-
-    assign data_output = data;
-
+    assign data_output = selector[0] ? (selector[1] ?  data_3 : data_2) : (selector[1] ? data_1 : data_0);
 endmodule
