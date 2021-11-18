@@ -90,7 +90,7 @@ module Cpu (
     wire [31:0] shift_left_16_out;
     wire [31:0] shift_right_2_out;
     wire [31:0] extend_ula_1_out;
-    wire [31:0] 28_to_32_out;
+    wire [31:0] sign_28_to_32_out;
 
     // Resultados da ULA
 
@@ -143,9 +143,9 @@ module Cpu (
         .z(ZR), 
         .Igual(EQ), 
         .Maior(GT), 
-        .Menor(LT)  
+        .Menor(LT),
         .Negativo(NG), 
-        .Overflow(overflow), 
+        .Overflow(overflow)
     );
 
     RegDesloc desloc (
@@ -180,7 +180,7 @@ module Cpu (
         .Instr31_26(OPCODE),
         .Instr25_21(RS),
         .Instr20_16(RT),
-        .Instr15_0(IMMEDIATE),
+        .Instr15_0(IMMEDIATE)
     );
 
     // Multi e Div
@@ -193,7 +193,7 @@ module Cpu (
         .HI(mult_div_hi_out),
         .LO(mult_div_lo_out),
         .div_0(start_div),
-        .div_stop(stop_div),
+        .div_stop(stop_div)
     );
     
     Multi multiplicador (
@@ -287,7 +287,7 @@ module Cpu (
         .Load(store_control),
         .Entrada(mux_store_size_out),
         
-        .Saida(store_size_out),
+        .Saida(store_size_out)
     );
    
     Registrador load_size_reg (
@@ -306,7 +306,7 @@ module Cpu (
         .data_0(pc_out),
         .data_1(a_out),
 
-        .data_output(alu_src_a_out),
+        .data_output(alu_src_a_out)
     );
     
     Mux2Bits mux_store_size (
@@ -314,7 +314,7 @@ module Cpu (
         .data_0(b_out),
         .data_1(memory_data_out),
 
-        .data_output(mux_store_size_out),
+        .data_output(mux_store_size_out)
     );
 
     Mux4Bits mux_alu_src_b (
@@ -332,7 +332,7 @@ module Cpu (
         .data_0(pc_out),
         .data_1(a_out),
 
-        .data_output(div_src_a_out),
+        .data_output(div_src_a_out)
     );
 
     Mux2Bits mux_div_src_b (
@@ -340,7 +340,7 @@ module Cpu (
         .data_0(memory_out),
         .data_1(b_out),
 
-        .data_output(div_src_b_out),
+        .data_output(div_src_b_out)
     );
     
     Mux2Bits mux_pc_control (
@@ -348,7 +348,7 @@ module Cpu (
         .data_0(pc_source_out),
         .data_1(a_out),
 
-        .data_output(pc_control_out),
+        .data_output(pc_control_out)
     );
 
     Mux4Bits mux_i_or_d (
@@ -358,7 +358,7 @@ module Cpu (
         .data_2(from_div),
         .data_3(exp_out),
 
-        .data_output(i_or_d_out),
+        .data_output(i_or_d_out)
     );
 
     Mux4Bits shift_src(
@@ -368,7 +368,7 @@ module Cpu (
         .data_2(IMMEDIATE),
         .data_3(a_out),
 
-        .data_output(shift_src_out),
+        .data_output(shift_src_out)
     );
 
     Mux4Bits mux_shift_amount (
@@ -378,17 +378,17 @@ module Cpu (
         .data_2(b_out),
         .data_3(IMMEDIATE),
 
-        .data_output(shift_amount_out),
+        .data_output(shift_amount_out)
     );
 
     Mux4Bits mux_pc_source (
         .seletor(pc_source),
         .data_0(alu_out),
         .data_1(alu_reg_out),
-        .data_2(28_to_32_out),
+        .data_2(sign_28_to_32_out),
         .data_3(epc_out),
         
-        .data_output(pc_source_out),
+        .data_output(pc_source_out)
     );
 
     Mux4Bits reg_dist (
@@ -398,7 +398,7 @@ module Cpu (
         .data_2(REG_30),
         .data_3(IMMEDIATE),
 
-        .data_output(reg_dist_out),
+        .data_output(reg_dist_out)
     );
 
     Mux8Bits mux_mem_to_reg (
@@ -412,19 +412,19 @@ module Cpu (
         .data_6(extend_immediate_out),
         .data_7(NUMBER_227),
 
-        .data_output(mem_to_reg_out),
+        .data_output(mem_to_reg_out)
     );
 
     // Extends
 
     SignExtend1 extend_ula (
         .data_in(alu_out),
-        .data_out(extend_ula_out),
+        .data_out(extend_ula_out)
     );
 
     SignExtend16 extend_immediate (
         .data_in(IMMEDIATE),
-        .data_out(extend_immediate_out),
+        .data_out(extend_immediate_out)
     );
 
 endmodule
