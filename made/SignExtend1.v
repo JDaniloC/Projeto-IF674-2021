@@ -1,5 +1,5 @@
 module SignExtend1(
-    input  wire         data_in
+    input  wire         data_in,
     output wire [31:0]  data_out_32 
 );
 
