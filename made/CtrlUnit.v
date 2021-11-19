@@ -16,7 +16,7 @@ module CtrlUnit (
 		output reg [2:0] alu_scr_b,
 		output reg [2:0] reg_dist_ctrl,
 
-		output reg [6:0] state
+		output reg [6:0] state,
 
 		//inputs
 		input wire [5:0] op_code,
@@ -74,14 +74,18 @@ module CtrlUnit (
 					alu_scr_b = 2'b01;
 					alu_op = 3'b001;
 
-					alu_src_a = 1'b0;
-					pc_source = 1'b0;
-					pc_control = 1'b0; 
-					
+					reg_dist = 2'b10;
+					reg_write = 1'b1;
+					mem_to_reg = 3'b111
+
 					i_or_d = 2'b00;
-					ir_write = 1'b0; 
+					ir_write = 1'b0;
 					pc_write = 1'b0;
+					pc_source = 1'b0;
+					alu_src_a = 2'b00;
+					pc_control = 1'b0; 
 					memory_write = 1'b0;
+					alu_out_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
 				
 					state = FETCH_STEP_TWO;
@@ -98,8 +102,10 @@ module CtrlUnit (
 					pc_control = 1'b0; 
 					
 					i_or_d = 2'b00;
-					ir_write = 1'b0; 
+					ir_write = 1'b0;
+					pc_source = 1'b0;
 					memory_write = 1'b0;
+					alu_out_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
 
 					state = FETCH_STEP_THREE;
@@ -117,8 +123,9 @@ module CtrlUnit (
 					pc_control = 1'b0; 
 					
 					i_or_d = 2'b00;
-					ir_write = 1'b0; 
+					reg_write = 1'b0;
 					memory_write = 1'b0;
+					alu_out_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
 
 					state = DECODE_STEP_ONE;
@@ -222,7 +229,6 @@ module CtrlUnit (
 					alu_op = 3'b000;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
-					reg_write = 1'b0;
 					reg_write = 1'b0;
 					pc_source = 1'b0;
 					alu_scr_b = 2'b00;
