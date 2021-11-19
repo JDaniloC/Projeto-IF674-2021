@@ -1,8 +1,6 @@
 module Cpu (
     input wire clock,
-    input wire reset,
-
-    output wire [6:0] state
+    input wire reset
 );
     // Sinais de controle
 
@@ -123,7 +121,6 @@ module Cpu (
     CtrlUnit cpu_ctrl (
         .clock(clock),
         .reset(reset),
-        .state(state),
         .i_or_d(i_or_d),
         .ir_write(ir_write),
         .pc_write(pc_write),
@@ -208,16 +205,16 @@ module Cpu (
         .div_stop(stop_div)
     );
     
-    Mult multiplicador (
-        .clock(clock),
-        .reset(reset),
-        .A(a_out),
-        .B(b_out),
-        .HI(mult_div_hi_out),
-        .LO(mult_div_lo_out),
-        .mult_in(start_multi),
-        .mult_out(stop_multi)
-    );
+    // Mult multiplicador (
+    //     .clock(clock),
+    //     .reset(reset),
+    //     .A(a_out),
+    //     .B(b_out),
+    //     .HI(mult_div_hi_out),
+    //     .LO(mult_div_lo_out),
+    //     .mult_in(start_multi),
+    //     .mult_out(stop_multi)
+    // );
 
     // Registradores  
 
@@ -429,14 +426,14 @@ module Cpu (
 
     // Extends
 
-    SignExtend1 extend_ula (
-        .data_in(alu_out),
-        .data_out(extend_ula_out)
-    );
+    // SignExtend1 extend_ula (
+    //     .data_in(alu_out),
+    //     .data_out(extend_ula_out)
+    // );
 
-    SignExtend16 extend_immediate (
-        .data_in(IMMEDIATE),
-        .data_out(extend_immediate_out)
-    );
+    // SignExtend16 extend_immediate (
+    //     .data_in(IMMEDIATE),
+    //     .data_out(extend_immediate_out)
+    // );
 
 endmodule
