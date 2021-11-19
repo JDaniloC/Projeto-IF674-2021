@@ -4,7 +4,7 @@ module Cpu (
 );
     // Sinais de controle
 
-    wire [2:0] I_or_D;
+    wire [2:0] i_or_d;
     wire ir_write;
     wire reg_write;
     wire epc_write;
@@ -17,8 +17,8 @@ module Cpu (
     wire pc_control;
     wire [2:0] pc_source;
     
-    wire [2:0] alu_op;
-    wire [2:0] alu_src_a;
+    wire alu_src_a;
+    wire [3:0] alu_op;
     wire [2:0] alu_src_b;
     wire alu_out_control;
     wire [2:0] alu_control;
@@ -120,7 +120,13 @@ module Cpu (
 
     CtrlUnit cpu_ctrl (
         .clock(clock),
-        .reset(reset)
+        .reset(reset),
+        .i_or_d(i_or_d),
+        .ir_write(ir_write),
+        .pc_write(pc_write),
+        .alu_scr_b(alu_src_b),
+        .pc_control(pc_control),
+        .memory_write(read_or_write)
     );
 
     // Blocos dados
@@ -352,7 +358,7 @@ module Cpu (
     );
 
     Mux4Bits mux_i_or_d (
-        .seletor(I_or_D),
+        .seletor(i_or_d),
         .data_0(pc_out),
         .data_1(alu_out),
         .data_2(from_div),
