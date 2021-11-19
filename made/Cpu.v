@@ -1,6 +1,8 @@
 module Cpu (
     input wire clock,
-    input wire reset
+    input wire reset,
+
+    output wire [6:0] state
 );
     // Sinais de controle
 
@@ -73,7 +75,7 @@ module Cpu (
     wire [31:0] b_out;
 
     wire [31:0] mux_store_size_out;
-    wire [31:0] shift_amount_out;
+    wire [4:0] shift_amount_out;
     wire [31:0] store_size_out;
     wire [31:0] shift_src_out;
     
@@ -121,6 +123,7 @@ module Cpu (
     CtrlUnit cpu_ctrl (
         .clock(clock),
         .reset(reset),
+        .state(state),
         .i_or_d(i_or_d),
         .ir_write(ir_write),
         .pc_write(pc_write),
@@ -311,7 +314,7 @@ module Cpu (
     // Blocos de controle
 
     Mux2Bits mux_alu_src_a (
-        .seletor(alu_src_a),
+        .selector(alu_src_a),
         .data_0(pc_out),
         .data_1(a_out),
 
@@ -319,7 +322,7 @@ module Cpu (
     );
     
     Mux2Bits mux_store_size (
-        .seletor(store_size_write),
+        .selector(store_size_write),
         .data_0(b_out),
         .data_1(memory_data_out),
 
@@ -327,7 +330,7 @@ module Cpu (
     );
 
     Mux4Bits mux_alu_src_b (
-        .seletor(alu_scr_b),
+        .selector(alu_scr_b),
         .data_0(b_out),
         .data_1(NUMBER_4),
         .data_2(shift_left_16_out),
@@ -337,7 +340,7 @@ module Cpu (
     );
     
     Mux2Bits mux_div_src_a (
-        .seletor(div_src_a),
+        .selector(div_src_a),
         .data_0(pc_out),
         .data_1(a_out),
 
@@ -345,7 +348,7 @@ module Cpu (
     );
 
     Mux2Bits mux_div_src_b (
-        .seletor(div_src_b),
+        .selector(div_src_b),
         .data_0(memory_out),
         .data_1(b_out),
 
@@ -353,7 +356,7 @@ module Cpu (
     );
     
     Mux2Bits mux_pc_control (
-        .seletor(pc_control),
+        .selector(pc_control),
         .data_0(pc_source_out),
         .data_1(a_out),
 
@@ -361,7 +364,7 @@ module Cpu (
     );
 
     Mux4Bits mux_i_or_d (
-        .seletor(i_or_d),
+        .selector(i_or_d),
         .data_0(pc_out),
         .data_1(alu_out),
         .data_2(from_div),
@@ -371,7 +374,7 @@ module Cpu (
     );
 
     Mux4Bits shift_src (
-        .seletor(shift_src_control),
+        .selector(shift_src_control),
         .data_0(a_out),
         .data_1(b_out),
         .data_2(IMMEDIATE),
@@ -381,7 +384,7 @@ module Cpu (
     );
 
     Mux4Bits mux_shift_amount (
-        .seletor(shift_amount_control),
+        .selector(shift_amount_control),
         .data_0(NUMBER_16),
         .data_1(memory_data_out),
         .data_2(b_out),
@@ -391,7 +394,7 @@ module Cpu (
     );
 
     Mux4Bits mux_pc_source (
-        .seletor(pc_source),
+        .selector(pc_source),
         .data_0(alu_out),
         .data_1(alu_reg_out),
         .data_2(sign_28_to_32_out),
@@ -401,7 +404,7 @@ module Cpu (
     );
 
     Mux4Bits reg_dist (
-        .seletor(reg_dist_ctrl),
+        .selector(reg_dist_ctrl),
         .data_0(RT),
         .data_1(REG_31),
         .data_2(REG_30),
@@ -411,7 +414,7 @@ module Cpu (
     );
 
     Mux8Bits mux_mem_to_reg (
-        .seletor(mem_to_reg),
+        .selector(mem_to_reg),
         .data_0(alu_out),
         .data_1(load_size_out),
         .data_2(hi_out),
