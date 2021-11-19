@@ -135,12 +135,12 @@ module Cpu (
     // Blocos dados
 
     Memoria memory (
-        .clock(clock),
-        .wr(read_or_write),
-        .address(i_or_d_out),
+        .Clock(clock),
+        .Wr(read_or_write),
+        .Address(i_or_d_out),
         
-        .data_in(store_size_out),
-        .data_out(memory_out)
+        .Datain(store_size_out),
+        .Dataout(memory_out)
     );
 
     ula32 ula_32 (

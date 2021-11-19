@@ -24,16 +24,16 @@ module CtrlUnit (
 	);
 
   	// parameters of states
-	parameter FETCH_STEP_ONE = 7'b0000001;
-	parameter FETCH_STEP_TWO = 7'b0000010;
-	parameter FETCH_STEP_THREE = 7'b0000011;
+	parameter FETCH_STEP_ONE = 	7'b0000001;
+	parameter FETCH_STEP_TWO = 	7'b0000010;
+	parameter FETCH_STEP_THREE =7'b0000011;
 	parameter DECODE_STEP_ONE = 7'b0000100;
 	parameter DECODE_STEP_TWO = 7'b0000101;
-	parameter CLOSE_WRITE = 7'b1001100;
-	parameter WAIT = 7'b1001101; 
+	parameter CLOSE_WRITE = 	7'b1001100;
+	parameter WAIT =			7'b1001101; 
 	
-  	parameter ADD = 7'b0000110;
-	parameter ADD_SUB_AND = 7'b0001001;
+  	parameter ADD = 			7'b0000110;
+	parameter ADD_SUB_AND = 	7'b0001001;
 
 	// parameters do opcode
 	parameter R_INSTRUCTION = 6'b000000;
@@ -86,7 +86,6 @@ module CtrlUnit (
 					pc_control = 1'b0; 
 					memory_write = 1'b0;
 					alu_out_write = 1'b0;
-					reg_dist_ctrl = 2'b00;
 				
 					state = FETCH_STEP_TWO;
 				end
