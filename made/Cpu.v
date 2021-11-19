@@ -19,8 +19,8 @@ module Cpu (
     
     wire alu_src_a;
     wire [3:0] alu_op;
+    wire alu_out_write;
     wire [2:0] alu_src_b;
-    wire alu_out_control;
     wire [2:0] alu_control;
     
     wire [2:0] exp_control;
@@ -124,9 +124,12 @@ module Cpu (
         .i_or_d(i_or_d),
         .ir_write(ir_write),
         .pc_write(pc_write),
+        .reg_write(reg_write),
         .alu_scr_b(alu_src_b),
         .pc_control(pc_control),
-        .memory_write(read_or_write)
+        .memory_write(read_or_write),
+        .alu_out_write(alu_out_write),
+        .reg_dist_ctrl(reg_dist_ctrl)
     );
 
     // Blocos dados
@@ -272,8 +275,8 @@ module Cpu (
     Registrador alu_out_reg (
         .Clk(clock),
         .Reset(reset),
+        .Load(alu_out_write),
         .Entrada(alu_reg_out),
-        .Load(alu_out_control),
         
         .Saida(alu_out_reg_out)
     );
@@ -367,7 +370,7 @@ module Cpu (
         .data_output(i_or_d_out)
     );
 
-    Mux4Bits shift_src(
+    Mux4Bits shift_src (
         .seletor(shift_src_control),
         .data_0(a_out),
         .data_1(b_out),
