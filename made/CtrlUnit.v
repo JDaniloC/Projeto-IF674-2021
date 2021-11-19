@@ -50,9 +50,9 @@ module CtrlUnit (
 	always @(posedge clock) begin
 		if (reset) begin
 	  
-			reg_dist = 2'b10;
 			reg_write = 1'b1;
 			mem_to_reg = 3'b111
+			reg_dist_ctrl = 2'b10;
 
 			i_or_d = 2'b00;
 			alu_op = 3'b000;
@@ -74,9 +74,9 @@ module CtrlUnit (
 					alu_scr_b = 2'b01;
 					alu_op = 3'b001;
 
-					reg_dist = 2'b10;
 					reg_write = 1'b1;
 					mem_to_reg = 3'b111
+					reg_dist_ctrl = 2'b10;
 
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
