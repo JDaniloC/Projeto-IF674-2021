@@ -1,16 +1,16 @@
 module CtrlUnit (
 	input clock,
 	input reset,
-	input i_or_d,
-	input ir_write,
-	input pc_write,
-	input pc_control,
-	input memory_write,
-	input [2:0] pc_source,
+	output reg i_or_d,
+	output reg ir_write,
+	output reg pc_write,
+	output reg pc_control,
+	output reg memory_write,
+	output reg [2:0] pc_source,
 	
-	input alu_src_a,
-	input [3:0] alu_op,
-	input [2:0] alu_scr_b,
+	output reg alu_src_a,
+	output reg [3:0] alu_op,
+	output reg [2:0] alu_scr_b,
 
 	output reg [6:0] state
   );
