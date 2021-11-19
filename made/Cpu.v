@@ -75,7 +75,7 @@ module Cpu (
     wire [31:0] mux_store_size_out;
     wire [31:0] shift_amount_out;
     wire [31:0] store_size_out;
-    wire [4:0] shift_src_out;
+    wire [31:0] shift_src_out;
     
     wire [31:0] hi_out;
     wire [31:0] lo_out;
@@ -205,7 +205,7 @@ module Cpu (
         .div_stop(stop_div)
     );
     
-    Multi multiplicador (
+    Mult multiplicador (
         .clock(clock),
         .reset(reset),
         .A(a_out),
