@@ -116,22 +116,6 @@ module Cpu (
     parameter REG_30 = 32'd30;
     parameter REG_31 = 32'd31;
 
-    // Bloco central
-
-    CtrlUnit cpu_ctrl (
-        .clock(clock),
-        .reset(reset),
-        .i_or_d(i_or_d),
-        .ir_write(ir_write),
-        .pc_write(pc_write),
-        .reg_write(reg_write),
-        .alu_scr_b(alu_src_b),
-        .pc_control(pc_control),
-        .memory_write(read_or_write),
-        .alu_out_write(alu_out_write),
-        .reg_dist_ctrl(reg_dist_ctrl)
-    );
-
     // Blocos dados
 
     Memoria memory (
@@ -435,5 +419,22 @@ module Cpu (
     //     .data_in(IMMEDIATE),
     //     .data_out(extend_immediate_out)
     // );
+
+    // Bloco central
+
+    CtrlUnit cpu_ctrl (
+        .clock(clock),
+        .reset(reset),
+        .i_or_d(i_or_d),
+        .ir_write(ir_write),
+        .pc_write(pc_write),
+        .reg_write(reg_write),
+        .alu_scr_b(alu_src_b),
+        .pc_control(pc_control),
+        .memory_write(read_or_write),
+        .alu_out_write(alu_out_write),
+        .reg_dist_ctrl(reg_dist_ctrl)
+        // .reset_out(reset)
+    );
 
 endmodule
