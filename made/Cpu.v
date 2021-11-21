@@ -18,7 +18,6 @@ module Cpu (
     wire [2:0] pc_source;
     
     wire alu_src_a;
-    wire [3:0] alu_op;
     wire alu_out_write;
     wire [2:0] alu_src_b;
     wire [2:0] alu_control;
@@ -113,8 +112,8 @@ module Cpu (
     parameter NUMBER_4 = 32'd4;
     parameter NUMBER_16 = 5'd16;
     parameter NUMBER_227 = 32'd227;
-    parameter REG_30 = 32'd30;
-    parameter REG_31 = 32'd31;
+    parameter REG_29 = 5'd29;
+    parameter REG_31 = 5'd31;
 
     // Blocos dados
 
@@ -311,7 +310,7 @@ module Cpu (
     );
 
     Mux4Bits mux_alu_src_b (
-        .selector(alu_scr_b),
+        .selector(alu_src_b),
         .data_0(b_out),
         .data_1(NUMBER_4),
         .data_2(shift_left_16_out),
@@ -384,12 +383,12 @@ module Cpu (
         .data_output(pc_source_out)
     );
 
-    Mux4Bits reg_dist (
+    Mux4BitsOf4Bits reg_dist (
         .selector(reg_dist_ctrl),
         .data_0(RT),
         .data_1(REG_31),
-        .data_2(REG_30),
-        .data_3(IMMEDIATE),
+        .data_2(REG_29),
+        .data_3(IMMEDIATE[15:11]),
 
         .data_output(reg_dist_out)
     );
@@ -426,15 +425,19 @@ module Cpu (
         .clock(clock),
         .reset(reset),
         .i_or_d(i_or_d),
+        .op_code(OPCODE),
         .ir_write(ir_write),
         .pc_write(pc_write),
+        .alu_op(alu_control),
         .reg_write(reg_write),
-        .alu_scr_b(alu_src_b),
+        .alu_src_b(alu_src_b),
+        .funct(IMMEDIATE[5:0]),
         .pc_control(pc_control),
         .memory_write(read_or_write),
         .alu_out_write(alu_out_write),
-        .reg_dist_ctrl(reg_dist_ctrl)
-        // .reset_out(reset)
+        .reg_dist_ctrl(reg_dist_ctrl),
+        .alu_src_a(alu_src_a)
+        // .mem_to_reg(mem_to_reg)
     );
 
 endmodule
