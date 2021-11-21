@@ -4,7 +4,7 @@ module Cpu (
 );
     // Sinais de controle
 
-    wire [2:0] i_or_d;
+    wire [1:0] i_or_d;
     wire ir_write;
     wire reg_write;
     wire epc_write;
@@ -15,20 +15,20 @@ module Cpu (
     
     wire pc_write;
     wire pc_control;
-    wire [2:0] pc_source;
+    wire [1:0] pc_source;
     
     wire alu_src_a;
     wire alu_out_write;
-    wire [2:0] alu_src_b;
+    wire [1:0] alu_src_b;
     wire [2:0] alu_control;
     
-    wire [2:0] exp_control;
+    wire [1:0] exp_control;
     wire [2:0] shift_control;
-    wire [2:0] shift_src_control;
-    wire [2:0] shift_amount_control;
+    wire [1:0] shift_src_control;
+    wire [1:0] shift_amount_control;
     
-    wire [2:0] reg_dist_ctrl;
-    wire [3:0] mem_to_reg;
+    wire [1:0] reg_dist_ctrl;
+    wire [2:0] mem_to_reg;
     
     wire div_or_mult;
     wire div_control;
@@ -86,8 +86,9 @@ module Cpu (
     wire [31:0] div_src_b_out;
 
     wire [31:0] sign_extend_16to32_out;
+    wire [31:0] extend_immediate_out;
     wire [31:0] shift_left_16_out;
-    wire [31:0] shift_right_2_out;
+    wire [31:0] shift_left_4_out;
     wire [31:0] extend_ula_1_out;
     wire [31:0] sign_28_to_32_out;
 
@@ -314,14 +315,14 @@ module Cpu (
         .data_0(b_out),
         .data_1(NUMBER_4),
         .data_2(shift_left_16_out),
-        .data_3(shift_right_2_out),
+        .data_3(shift_left_4_out),
 
         .data_output(alu_src_b_out)
     );
     
     Mux2Bits mux_div_src_a (
         .selector(div_src_a),
-        .data_0(pc_out),
+        .data_0(memory_data_out),
         .data_1(a_out),
 
         .data_output(div_src_a_out)
@@ -346,8 +347,8 @@ module Cpu (
     Mux4Bits mux_i_or_d (
         .selector(i_or_d),
         .data_0(pc_out),
-        .data_1(alu_out),
-        .data_2(from_div),
+        .data_1(alu_out_reg_out),
+        .data_2(b_out),
         .data_3(exp_out),
 
         .data_output(i_or_d_out)
@@ -395,13 +396,13 @@ module Cpu (
 
     Mux8Bits mux_mem_to_reg (
         .selector(mem_to_reg),
-        .data_0(alu_out),
+        .data_0(alu_out_reg_out),
         .data_1(load_size_out),
         .data_2(hi_out),
         .data_3(lo_out),
         .data_4(extend_ula_1_out),
         .data_5(shift_reg_out),
-        .data_6(extend_immediate_out),
+        .data_6(shift_left_16_out),
         .data_7(NUMBER_227),
 
         .data_output(mem_to_reg_out)
@@ -409,15 +410,27 @@ module Cpu (
 
     // Extends
 
-    // SignExtend1 extend_ula (
-    //     .data_in(alu_out),
-    //     .data_out(extend_ula_out)
-    // );
+    SignExtend1 extend_ula (
+        .data_in(LT),
+        .data_out_32(extend_ula_1_out)
+    );
 
-    // SignExtend16 extend_immediate (
-    //     .data_in(IMMEDIATE),
-    //     .data_out(extend_immediate_out)
-    // );
+    SignExtend16 extend_immediate (
+        .data_in(IMMEDIATE),
+        .data_out_32(extend_immediate_out)
+    );
+
+    // Shifts
+
+    ShiftLeft4 shift_left_4 (
+        .data_in(extend_immediate_out),
+        .shift_left_4_out(shift_left_4_out)
+    );
+
+    ShiftLeft16 shift_left_16 (
+        .data_in(IMMEDIATE),
+        .shift_left_16_out(shift_left_16_out)
+    );
 
     // Bloco central
 
@@ -436,8 +449,9 @@ module Cpu (
         .memory_write(read_or_write),
         .alu_out_write(alu_out_write),
         .reg_dist_ctrl(reg_dist_ctrl),
-        .alu_src_a(alu_src_a)
-        // .mem_to_reg(mem_to_reg)
+        .alu_src_a(alu_src_a),
+        .mem_to_reg(mem_to_reg),
+        .pc_source(pc_source)
     );
 
 endmodule

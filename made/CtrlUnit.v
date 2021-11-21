@@ -1,20 +1,20 @@
 module CtrlUnit (
 		input clock,
 		input reset,
-		output reg [2:0] i_or_d,
+		output reg [1:0] i_or_d,
+		output reg [1:0] pc_source,
 		output reg ir_write,
 		output reg pc_write,
 		output reg pc_control,
 		output reg memory_write,
 		output reg reg_write,
-		output reg mem_to_reg,
-		output reg [2:0] pc_source,
 		
 		output reg alu_src_a,
 		output reg [2:0] alu_op,
 		output reg alu_out_write,
-		output reg [2:0] alu_src_b,
-		output reg [2:0] reg_dist_ctrl,
+		output reg [1:0] alu_src_b,
+		output reg [2:0] mem_to_reg,
+		output reg [1:0] reg_dist_ctrl,
 
 		// output reg reset_out,
 
@@ -57,12 +57,12 @@ module CtrlUnit (
 			reg_dist_ctrl = 2'b10;
 
 			i_or_d = 2'b00;
-			alu_op = 2'b00;
+			alu_op = 3'b000;
 			ir_write = 1'b0;
 			pc_write = 1'b0;
-			pc_source = 1'b0;
-			alu_src_b = 2'b00;
 			alu_src_a = 1'b0;
+			pc_source = 2'b00;
+			alu_src_b = 2'b00;
 			pc_control = 1'b0; 
 			memory_write = 1'b0;
 			alu_out_write = 1'b0; 
@@ -72,8 +72,8 @@ module CtrlUnit (
 			case (state) 
 				FETCH_STEP_ONE: begin
 
+					alu_op = 3'b001;
 					alu_src_b = 2'b01;
-					alu_op = 2'b01;
 
 					reg_write = 1'b1;
 					mem_to_reg = 3'b000;
@@ -82,8 +82,8 @@ module CtrlUnit (
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
-					pc_source = 1'b0;
 					alu_src_a = 1'b0;
+					pc_source = 2'b00;
 					pc_control = 1'b0; 
 					memory_write = 1'b0;
 					alu_out_write = 1'b0;
@@ -95,16 +95,16 @@ module CtrlUnit (
 						
 					pc_write = 1'b1;
 
-					alu_op = 2'b01;
+					alu_op = 3'b001;
 					alu_src_a = 1'b0;
-					pc_source = 1'b0;
+					pc_source = 2'b00;
 					alu_src_b = 2'b01;
 					pc_control = 1'b0; 
 					mem_to_reg = 3'b000;
 
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
-					pc_source = 1'b0;
+					reg_write = 1'b0;
 					memory_write = 1'b0;
 					alu_out_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
@@ -117,9 +117,9 @@ module CtrlUnit (
 					pc_write = 1'b0;
 					ir_write = 1'b1;
 
-					alu_op = 2'b01;
+					alu_op = 3'b001;
 					alu_src_a = 1'b0;
-					pc_source = 1'b0;
+					pc_source = 2'b00;
 					alu_src_b = 2'b01;
 					pc_control = 1'b0;
 					mem_to_reg = 3'b000;
@@ -135,18 +135,18 @@ module CtrlUnit (
 
 				DECODE_STEP_ONE: begin
 
+					alu_op = 3'b001;
 					ir_write = 1'b0;
-					alu_op = 2'b01;
 					reg_write = 1'b1;
-					alu_src_b = 2'b10;
-					alu_out_write = 2'b1;
+					alu_src_b = 2'b11;
+					alu_out_write = 1'b1;
 
 					alu_src_a = 1'b0;
 					mem_to_reg = 3'b000;
 					
 					i_or_d = 2'b00;
 					pc_write = 1'b0;
-					pc_source = 1'b0;
+					pc_source = 2'b00;
 					pc_control = 1'b0; 
 					memory_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
@@ -158,16 +158,16 @@ module CtrlUnit (
 
 					reg_write = 1'b0;
 					alu_src_b = 2'b00;
-					alu_out_write = 2'b0;
+					alu_out_write = 1'b0;
 
+					alu_op = 3'b001;
 					ir_write = 1'b0;
-					alu_op = 2'b01;
 					alu_src_a = 1'b0;
 					mem_to_reg = 3'b000;
 					
 					i_or_d = 2'b00;
 					pc_write = 1'b0;
-					pc_source = 1'b0;
+					pc_source = 2'b00;
 					pc_control = 1'b0; 
 					memory_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
@@ -185,7 +185,7 @@ module CtrlUnit (
 
 				ADD: begin
 					
-					alu_op = 2'b01;
+					alu_op = 3'b001;
 					alu_src_a = 1'b1;
 					alu_out_write = 1'b1;
 
@@ -197,7 +197,7 @@ module CtrlUnit (
 					ir_write = 1'b0;
 					pc_write = 1'b0;
 					reg_write = 1'b0;
-					pc_source = 1'b0;
+					pc_source = 2'b00;
 					pc_control = 1'b0; 
 					memory_write = 1'b0;
 
@@ -206,7 +206,7 @@ module CtrlUnit (
 
 				ADD_SUB_AND: begin
 					
-					alu_op = 2'b00;
+					alu_op = 3'b000;
 					reg_write = 1'b1;
 					alu_src_a = 1'b0;
 					alu_out_write = 1'b0;
@@ -218,7 +218,7 @@ module CtrlUnit (
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
-					pc_source = 1'b0;
+					pc_source = 2'b00;
 					pc_control = 1'b0;
 					memory_write = 1'b0;
 
@@ -230,17 +230,17 @@ module CtrlUnit (
 					alu_out_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
 
-					mem_to_reg = 3'b000;
 					i_or_d = 2'b00;
-					alu_op = 2'b00;
+					alu_op = 3'b000;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
 					reg_write = 1'b0;
-					pc_source = 1'b0;
+					pc_source = 2'b00;
 					alu_src_a = 1'b0;
 					alu_src_b = 2'b00;
 					pc_control = 1'b0; 
 					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
 					
 					state = FETCH_STEP_ONE;
 				end
