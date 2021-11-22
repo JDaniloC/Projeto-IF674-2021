@@ -205,7 +205,6 @@ module CtrlUnit (
 				end
 
 				ADD_SUB_AND: begin
-					
 					alu_op = 3'b000;
 					reg_write = 1'b1;
 					alu_src_a = 1'b0;
