@@ -18,13 +18,14 @@ module Cpu (
     wire [1:0] pc_source;
     
     wire alu_src_a;
+    wire a_b_write;
     wire alu_out_write;
     wire [1:0] alu_src_b;
     wire [2:0] alu_control;
     
+    wire shift_src_control;
     wire [1:0] exp_control;
     wire [2:0] shift_control;
-    wire [1:0] shift_src_control;
     wire [1:0] shift_amount_control;
     
     wire [1:0] reg_dist_ctrl;
@@ -42,6 +43,9 @@ module Cpu (
     wire stop_div;
     wire start_multi;
     wire stop_multi;
+    
+    wire div_src_a;
+    wire div_src_b;
 
     // Fios de dados
 
@@ -80,9 +84,7 @@ module Cpu (
     wire [31:0] lo_out;
     wire [31:0] mult_div_hi_out;
     wire [31:0] mult_div_lo_out;
-    wire [31:0] div_src_a;
     wire [31:0] div_src_a_out;
-    wire [31:0] div_src_b;
     wire [31:0] div_src_b_out;
 
     wire [31:0] sign_extend_16to32_out;
@@ -110,9 +112,9 @@ module Cpu (
 
     // Parametros de controle
 
-    parameter NUMBER_4 = 32'd4;
-    parameter NUMBER_16 = 5'd16;
     parameter NUMBER_227 = 32'd227;
+    parameter NUMBER_16 = 5'd16;
+    parameter NUMBER_4 = 32'd4;
     parameter REG_29 = 5'd29;
     parameter REG_31 = 5'd31;
 
@@ -241,7 +243,7 @@ module Cpu (
     Registrador a_reg (
         .Clk(clock),
         .Reset(reset),
-        .Load(reg_write), 
+        .Load(a_b_write), 
         .Entrada(reg_a_out),
         
         .Saida(a_out)
@@ -250,7 +252,7 @@ module Cpu (
     Registrador b_reg (
         .Clk(clock),
         .Reset(reset),
-        .Load(reg_write),
+        .Load(a_b_write),
         .Entrada(reg_b_out), 
 
         .Saida(b_out)
@@ -320,21 +322,21 @@ module Cpu (
         .data_output(alu_src_b_out)
     );
     
-    Mux2Bits mux_div_src_a (
-        .selector(div_src_a),
-        .data_0(memory_data_out),
-        .data_1(a_out),
+    // Mux2Bits mux_div_src_a (
+    //     .selector(div_src_a),
+    //     .data_0(memory_data_out),
+    //     .data_1(a_out),
 
-        .data_output(div_src_a_out)
-    );
+    //     .data_output(div_src_a_out)
+    // );
 
-    Mux2Bits mux_div_src_b (
-        .selector(div_src_b),
-        .data_0(memory_out),
-        .data_1(b_out),
+    // Mux2Bits mux_div_src_b (
+    //     .selector(div_src_b),
+    //     .data_0(memory_out),
+    //     .data_1(b_out),
 
-        .data_output(div_src_b_out)
-    );
+    //     .data_output(div_src_b_out)
+    // );
     
     Mux2Bits mux_pc_control (
         .selector(pc_control),
@@ -342,6 +344,14 @@ module Cpu (
         .data_1(a_out),
 
         .data_output(pc_control_out)
+    );
+
+    Mux2Bits shift_src (
+        .selector(shift_src_control),
+        .data_0(a_out),
+        .data_1(b_out),
+
+        .data_output(shift_src_out)
     );
 
     Mux4Bits mux_i_or_d (
@@ -354,22 +364,12 @@ module Cpu (
         .data_output(i_or_d_out)
     );
 
-    Mux4Bits shift_src (
-        .selector(shift_src_control),
-        .data_0(a_out),
-        .data_1(b_out),
-        .data_2(IMMEDIATE),
-        .data_3(a_out),
-
-        .data_output(shift_src_out)
-    );
-
-    Mux4Bits mux_shift_amount (
+    Mux4BitsOf4Bits mux_shift_amount (
         .selector(shift_amount_control),
         .data_0(NUMBER_16),
-        .data_1(memory_data_out),
-        .data_2(b_out),
-        .data_3(IMMEDIATE),
+        .data_1(memory_data_out[4:0]),
+        .data_2(b_out[20:16]),
+        .data_3(IMMEDIATE[10:6]),
 
         .data_output(shift_amount_out)
     );
@@ -442,6 +442,7 @@ module Cpu (
         .ir_write(ir_write),
         .pc_write(pc_write),
         .alu_op(alu_control),
+        .a_b_write(a_b_write),
         .reg_write(reg_write),
         .alu_src_b(alu_src_b),
         .funct(IMMEDIATE[5:0]),

@@ -8,7 +8,8 @@ module CtrlUnit (
 		output reg pc_control,
 		output reg memory_write,
 		output reg reg_write,
-		
+		output reg a_b_write,
+
 		output reg alu_src_a,
 		output reg [2:0] alu_op,
 		output reg alu_out_write,
@@ -61,6 +62,7 @@ module CtrlUnit (
 			ir_write = 1'b0;
 			pc_write = 1'b0;
 			alu_src_a = 1'b0;
+			a_b_write = 1'b0;
 			pc_source = 2'b00;
 			alu_src_b = 2'b00;
 			pc_control = 1'b0; 
@@ -82,6 +84,7 @@ module CtrlUnit (
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
+					a_b_write = 1'b0;
 					alu_src_a = 1'b0;
 					pc_source = 2'b00;
 					pc_control = 1'b0; 
@@ -104,6 +107,7 @@ module CtrlUnit (
 
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
+					a_b_write = 1'b0;
 					reg_write = 1'b0;
 					memory_write = 1'b0;
 					alu_out_write = 1'b0;
@@ -124,6 +128,7 @@ module CtrlUnit (
 					pc_control = 1'b0;
 					mem_to_reg = 3'b000;
 					
+					a_b_write = 1'b0;
 					i_or_d = 2'b00;
 					reg_write = 1'b0;
 					memory_write = 1'b0;
@@ -137,10 +142,11 @@ module CtrlUnit (
 
 					alu_op = 3'b001;
 					ir_write = 1'b0;
-					reg_write = 1'b1;
+					a_b_write = 1'b1;
 					alu_src_b = 2'b11;
 					alu_out_write = 1'b1;
 
+					reg_write = 1'b0;
 					alu_src_a = 1'b0;
 					mem_to_reg = 3'b000;
 					
@@ -156,6 +162,7 @@ module CtrlUnit (
 
 				DECODE_STEP_TWO: begin
 
+					a_b_write = 1'b0;
 					reg_write = 1'b0;
 					alu_src_b = 2'b00;
 					alu_out_write = 1'b0;
@@ -196,6 +203,7 @@ module CtrlUnit (
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
+					a_b_write = 1'b0;
 					reg_write = 1'b0;
 					pc_source = 2'b00;
 					pc_control = 1'b0; 
@@ -217,6 +225,7 @@ module CtrlUnit (
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
+					a_b_write = 1'b0;
 					pc_source = 2'b00;
 					pc_control = 1'b0;
 					memory_write = 1'b0;
@@ -233,6 +242,7 @@ module CtrlUnit (
 					alu_op = 3'b000;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
+					a_b_write = 1'b0;
 					reg_write = 1'b0;
 					pc_source = 2'b00;
 					alu_src_a = 1'b0;
