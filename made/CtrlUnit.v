@@ -38,9 +38,13 @@ module CtrlUnit (
 	parameter AND 			    = 7'b0001000;
 	parameter ADD_SUB_AND 	   	= 7'b0001001;
 	parameter SHIFT_SHAMT		= 7'b0001010;
-	parameter ADDI_ADDIU    	= 7'b0001011;
-	parameter ADDI 				= 7'b0001100;
-	parameter ADDIU 			= 7'b0001101;
+	parameter SLL				= 7'b0001011;
+	parameter SRL				= 7'b0001100;
+	parameter SRA				= 7'b0001101;
+	parameter SLL_SRA_SRL		= 7'b0001110;
+	parameter ADDI_ADDIU    	= 7'b0001111;
+	parameter ADDI 				= 7'b0010000;
+	parameter ADDIU 			= 7'b0010001;
 	
 	// parameters do opcode
 	parameter R_INSTRUCTION = 6'b000000;
@@ -362,9 +366,25 @@ module CtrlUnit (
 
 				SHIFT_SHAMT: begin
 					
-					shift_control = 3'b0;
+					shift_control = LOAD_SRC;
           			shift_src_control = 1'b0;
 					shift_amount_control = 2'b10;
+
+					alu_src_a = 1'b0;
+					alu_src_b = 2'b00;
+
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_source = 2'b00;
+					alu_op = ULA_LOAD;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
 
 					case(Funct)
 						SLL_FUNCT: begin
