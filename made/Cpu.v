@@ -64,7 +64,6 @@ module Cpu (
     wire [31:0] alu_src_a_out;
     wire [31:0] alu_src_b_out;
     wire [31:0] shift_reg_out;
-    wire [31:0] alu_reg_out;
     wire [31:0] alu_out;
     
     wire [4:0] reg_dist_out;
@@ -262,7 +261,7 @@ module Cpu (
         .Clk(clock),
         .Reset(reset),
         .Load(alu_out_write),
-        .Entrada(alu_reg_out),
+        .Entrada(alu_out),
         
         .Saida(alu_out_reg_out)
     );
@@ -377,7 +376,7 @@ module Cpu (
     Mux4Bits mux_pc_source (
         .selector(pc_source),
         .data_0(alu_out),
-        .data_1(alu_reg_out),
+        .data_1(alu_out_reg_out),
         .data_2(sign_28_to_32_out),
         .data_3(epc_out),
         
