@@ -23,7 +23,8 @@ module CtrlUnit (
 
 		//inputs
 		input wire [5:0] op_code,
-		input wire [5:0] funct
+		input wire [5:0] funct,
+		input wire equal
 	);
 
   // parameters of states
@@ -45,6 +46,9 @@ module CtrlUnit (
 	parameter ADDI_ADDIU    	= 7'b0001111; // 15 
 	parameter ADDI 				= 7'b0010000; // 16
 	parameter ADDIU 			= 7'b0010001; // 17
+	parameter BEQ_BNE_STEP_ONE  = 7'b0010010; // 18
+	parameter BEQ_BNE_STEP_TWO  = 7'b0010011; // 19 
+	
 	
 	// parameters do opcode
 	parameter R_INSTRUCTION = 6'b000000;
@@ -94,6 +98,7 @@ module CtrlUnit (
 	parameter ULA_XOR = 3'b110;
 	parameter ULA_NOT = 3'b101;
 	parameter ULA_INC = 3'b100;
+	parameter ULA_EG_GT_LT = 3'b111;
 
 	// Shift operations
 	
@@ -277,6 +282,15 @@ module CtrlUnit (
 						ADDIU_OPCODE: begin
 							state = ADDI_ADDIU;
 						end
+
+						BEQ_OPCODE: begin 
+							state = BEQ_BNE_STEP_ONE; 
+						end
+
+						BNE_OPCODE: begin
+							state = BEQ_BNE_STEP_ONE; 
+						end
+
 					endcase
 				end
 
@@ -570,6 +584,76 @@ module CtrlUnit (
 
 					state = CLOSE_WRITE;
 				end
+
+				BEQ_BNE_STEP_ONE: begin
+
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
+					alu_op = ULA_EG_GT_LT;
+					pc_source = 2'b01;
+
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					shift_amount_control = 2'b00;
+
+					state = BEQ_BNE_STEP_TWO;
+				end
+
+				BEQ_BNE_STEP_TWO: begin
+
+					alu_src_b = 2'b00;
+
+					alu_src_a = 1'b1;
+					alu_op = ULA_EG_GT_LT;
+					pc_source = 2'b01;
+					pc_source = 2'b01;
+
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					shift_amount_control = 2'b00;
+
+					state = CLOSE_WRITE;
+
+					case(op_code)
+
+						BEQ_OPCODE: begin
+							if(equal == 1'b1) begin
+								pc_write = 1'b1;  
+							end else begin
+								pc_write = 1'b0;
+							end
+						end
+
+						BNE_OPCODE: begin 
+							if(equal == 1'b0) begin
+								pc_write = 1'b1;  
+							end else begin 
+								pc_write = 1'b0;
+							end
+						end
+					endcase
+				end
+
 
 				CLOSE_WRITE: begin
 					

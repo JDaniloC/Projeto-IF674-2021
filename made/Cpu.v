@@ -454,6 +454,7 @@ module Cpu (
         .shift_control(shift_control),
         .shift_src_control(shift_src_control),
         .shift_amount_control(shift_amount_control)
+        .equal(EQ)
     );
 
 endmodule
