@@ -23,7 +23,7 @@ module Cpu (
     wire [1:0] alu_src_b;
     wire [2:0] alu_control;
     
-    wire shift_src_control;
+    wire ft_src_control;
     wire [1:0] exp_control;
     wire [2:0] shift_control;
     wire [1:0] shift_amount_control;
@@ -86,7 +86,6 @@ module Cpu (
     wire [31:0] div_src_a_out;
     wire [31:0] div_src_b_out;
 
-    wire [31:0] sign_extend_16to32_out;
     wire [31:0] extend_immediate_out;
     wire [31:0] shift_left_16_out;
     wire [31:0] shift_left_4_out;
@@ -315,7 +314,7 @@ module Cpu (
         .selector(alu_src_b),
         .data_0(b_out),
         .data_1(NUMBER_4),
-        .data_2(shift_left_16_out),
+        .data_2(extend_immediate_out),
         .data_3(shift_left_4_out),
 
         .data_output(alu_src_b_out)

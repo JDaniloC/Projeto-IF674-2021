@@ -16,20 +16,20 @@ Essas são as instruções que conseguimos fazer:
 - [ ] jr rs
 - [ ] mfhi rd
 - [ ] mflo rd
-- [ ] sll rd, rt, shamt
+- [x] sll rd, rt, shamt
 - [ ] sllv rd, rt, rt
 - [ ] slt rd, rs, rt
-- [ ] sra rd, rt, shamt
+- [x] sra rd, rt, shamt
 - [ ] srav rd, rs, rt
-- [ ] srl rd, rt, shamt 
+- [x] srl rd, rt, shamt 
 - [ ] break 
 - [ ] Rte 
 - [ ] divm rs,rt
 
 ### Instruções do tipo I
 
-- [ ] addi rt, rs, imediato
-- [ ] addiu rt, rs, imediato
+- [x] addi rt, rs, imediato
+- [x] addiu rt, rs, imediato
 - [ ] beq rs,rt, offset
 - [ ] bne rs, rt, offset 
 - [ ] ble rs, rt, offset 

@@ -27,7 +27,7 @@ module CtrlUnit (
 	);
 
   // parameters of states
-	parameter CLOSE_WRITE 	   	= 7'b1000000; // 0
+	parameter CLOSE_WRITE 	   	= 7'b1000000; // 64
 	parameter FETCH_STEP_ONE   	= 7'b0000001; // 1
 	parameter FETCH_STEP_TWO   	= 7'b0000010; // 2 
 	parameter FETCH_STEP_THREE 	= 7'b0000011; // 3 
@@ -256,12 +256,15 @@ module CtrlUnit (
 									state = AND; 
 								end
 								SLL_FUNCT: begin
+									a_b_write = 1'b1;
 									state = SHIFT_SHAMT;
 								end
 								SRA_FUNCT: begin
+									a_b_write = 1'b1;
 									state = SHIFT_SHAMT;
 								end
 								SRL_FUNCT: begin
+									a_b_write = 1'b1;
 									state = SHIFT_SHAMT;
 								end
 							endcase
@@ -366,9 +369,8 @@ module CtrlUnit (
 
 				SHIFT_SHAMT: begin
 					
-					a_b_write = 1'b1;
 					shift_control = LOAD_SRC;
-          			shift_src_control = 1'b0;
+          			shift_src_control = 1'b1;
 					shift_amount_control = 2'b10;
 
 					i_or_d = 2'b00;
@@ -376,6 +378,7 @@ module CtrlUnit (
 					pc_write = 1'b0;
 					reg_write = 1'b0;
 					alu_src_a = 1'b0;
+					a_b_write = 1'b0;
 					alu_src_b = 2'b00;
 					pc_source = 2'b00;
 					alu_op = ULA_LOAD;
@@ -400,7 +403,7 @@ module CtrlUnit (
 
 				SLL: begin
 
-          			shift_src_control = 1'b1;
+          			shift_src_control = 1'b0;
 					shift_control = LEFT_ARTH;
 					shift_amount_control = 2'b00;
 
@@ -424,7 +427,7 @@ module CtrlUnit (
 
 				SRA: begin
 
-          			shift_src_control = 1'b1;
+          			shift_src_control = 1'b0;
 					shift_control = RIGHT_ART;
 					shift_amount_control = 2'b00;
 
@@ -448,7 +451,7 @@ module CtrlUnit (
 
 				SRL: begin
 
-          			shift_src_control = 1'b1;
+          			shift_src_control = 1'b0;
 					shift_control = RIGHT_LOG;
 					shift_amount_control = 2'b00;
 
@@ -474,7 +477,7 @@ module CtrlUnit (
 				
 					reg_write = 1'b1;
 					mem_to_reg = 3'b101;
-					reg_dist_ctrl = 2'b00;
+					reg_dist_ctrl = 2'b11;
 
           			shift_src_control = 1'b0;
 					shift_control = DO_NOTHING;
@@ -497,8 +500,8 @@ module CtrlUnit (
 
 				ADDI_ADDIU: begin
 
-					alu_src_a = 1'b0;
-					alu_src_b = 2'b00;
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
 					alu_op = ULA_ADD;
 					alu_out_write = 1'b1;
 
@@ -526,8 +529,8 @@ module CtrlUnit (
 
 				ADDI: begin
 
-					alu_src_a = 1'b0;
-					alu_src_b = 2'b00;
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
 					mem_to_reg = 3'b000;
 					reg_dist_ctrl = 2'b00;
 					reg_write = 1'b1;
