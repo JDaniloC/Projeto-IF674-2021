@@ -218,7 +218,9 @@ module CtrlUnit (
 							endcase
 						end
 
-						ADDI
+						ADDI: begin
+
+						end
 					endcase
 				end
 
