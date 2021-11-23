@@ -35,7 +35,7 @@ module CtrlUnit (
 	parameter SUB 			    = 7'b0000111;
 	parameter AND 			    = 7'b0001000;
 	parameter ADD_SUB_AND 	   	= 7'b0001001;
-	parameter SSL 			   	= 7'b0001010;
+	parameter SHIFT_SHAMT		= 7'b0001010;
 	parameter ADDI_ADDIU    	= 7'b0001011;
 	
 	// parameters do opcode
@@ -235,7 +235,13 @@ module CtrlUnit (
 									state = AND; 
 								end
 								SLL_FUNCT: begin
-									state = SSL;
+									state = SHIFT_SHAMT;
+								end
+								SRA_FUNCT: begin
+									state = SHIFT_SHAMT;
+								end
+								SRL_FUNCT: begin
+									state = SHIFT_SHAMT;
 								end
 							endcase
 						end
@@ -337,9 +343,37 @@ module CtrlUnit (
 					state = CLOSE_WRITE;
 				end
 
-				SSL: begin
+				SHIFT_SHAMT: begin
 					
+					case(Funct)
+						SLL_FUNCT: begin
+							state = SLL;
+						end
+						SRA_FUNCT: begin
+							state = SRA;
+						end
+						SRL_FUNCT: begin
+							state = SRL;
+						end
+					endcase
 				end
+
+				SLL: begin
+					state = SLL_SRA_SRL;
+				end
+
+				SRA: begin
+					state = SLL_SRA_SRL;
+				end
+
+				SRL: begin
+					state = SLL_SRA_SRL;
+				end
+
+				ADDI_ADDIU:
+
+					
+					
 
 				CLOSE_WRITE: begin
 					
