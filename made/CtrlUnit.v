@@ -425,7 +425,7 @@ module CtrlUnit (
 				SRA: begin
 
           			shift_src_control = 1'b0;
-					shift_control = RIGHT_ARTH;
+					shift_control = RIGHT_ART;
 					shift_amount_control = 2'b00;
 
 					i_or_d = 2'b00;
