@@ -48,3 +48,8 @@ Essas são as instruções que conseguimos fazer:
 
 - [ ] j offset
 - [ ] jal offset
+
+### Exceção
+- [ ] Overflow
+- [ ] div 0
+- [ ] opcode inexistente

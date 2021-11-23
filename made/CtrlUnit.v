@@ -35,10 +35,29 @@ module CtrlUnit (
 	parameter SUB 			    = 7'b0000111;
 	parameter AND 			    = 7'b0001000;
 	parameter ADD_SUB_AND 	   	= 7'b0001001;
+	parameter SSL 			   	= 7'b0001010;
+	parameter ADDI_ADDIU    	= 7'b0001011;
 	
 	// parameters do opcode
 	parameter R_INSTRUCTION = 6'b000000;
-
+	parameter ADDI_OPCODE 	= 6'b001000;
+	parameter ADDIU_OPCODE 	= 6'b001001;
+	parameter BEQ_OPCODE 	= 6'b000100;
+	parameter BNE_OPCODE 	= 6'b000101;
+	parameter BLE_OPCODE 	= 6'b000110;
+	parameter BGT_OPCODE 	= 6'b000111;
+	parameter BLM_OPCODE 	= 6'b000001;
+	parameter LB_OPCODE 	= 6'b100000;
+	parameter LH_OPCODE 	= 6'b100001;
+	parameter LUI_OPCODE 	= 6'b001111;
+	parameter LW_OPCODE 	= 6'b100011;
+	parameter SB_OPCODE 	= 6'b101000;
+	parameter SH_OPCODE 	= 6'b101001;
+	parameter SLTI_OPCODE 	= 6'b001010;
+	parameter SW_OPCODE 	= 6'b101011;
+	parameter J_OPCODE 		= 6'b000010;
+	parameter JAL_OPCODE 	= 6'b000011;
+	
 	// parameters do funct
 	parameter SLL_FUNCT 	= 6'b000000;
 	parameter SRL_FUNCT 	= 6'b000010;
@@ -215,11 +234,18 @@ module CtrlUnit (
 								AND_FUNCT: begin
 									state = AND; 
 								end
+								SLL_FUNCT: begin
+									state = SSL;
+								end
 							endcase
 						end
 
-						ADDI: begin
+						ADDI_OPCODE: begin
+							state = ADDI_ADDIU;
+						end
 
+						ADDIU_OPCODE: begin
+							state = ADDI_ADDIU;
 						end
 					endcase
 				end
@@ -245,6 +271,7 @@ module CtrlUnit (
 
 					state = ADD_SUB_AND;
 				end
+					
 
 				SUB: begin      
 					alu_op = ULA_SUB;
@@ -308,6 +335,10 @@ module CtrlUnit (
 					memory_write = 1'b0;
 
 					state = CLOSE_WRITE;
+				end
+
+				SSL: begin
+					
 				end
 
 				CLOSE_WRITE: begin
