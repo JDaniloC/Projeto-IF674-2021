@@ -27,7 +27,7 @@ module CtrlUnit (
 	);
 
   // parameters of states
-	parameter CLOSE_WRITE 	   	= 7'b0000000; // 0
+	parameter CLOSE_WRITE 	   	= 7'b1000000; // 0
 	parameter FETCH_STEP_ONE   	= 7'b0000001; // 1
 	parameter FETCH_STEP_TWO   	= 7'b0000010; // 2 
 	parameter FETCH_STEP_THREE 	= 7'b0000011; // 3 
@@ -400,7 +400,7 @@ module CtrlUnit (
 
 				SLL: begin
 
-          			shift_src_control = 1'b0;
+          			shift_src_control = 1'b1;
 					shift_control = LEFT_ARTH;
 					shift_amount_control = 2'b00;
 
@@ -424,7 +424,7 @@ module CtrlUnit (
 
 				SRA: begin
 
-          			shift_src_control = 1'b0;
+          			shift_src_control = 1'b1;
 					shift_control = RIGHT_ART;
 					shift_amount_control = 2'b00;
 
@@ -448,7 +448,7 @@ module CtrlUnit (
 
 				SRL: begin
 
-          			shift_src_control = 1'b0;
+          			shift_src_control = 1'b1;
 					shift_control = RIGHT_LOG;
 					shift_amount_control = 2'b00;
 
