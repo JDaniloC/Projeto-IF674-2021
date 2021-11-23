@@ -27,24 +27,24 @@ module CtrlUnit (
 	);
 
   // parameters of states
-	parameter CLOSE_WRITE 	   	= 7'b0000000;
-	parameter FETCH_STEP_ONE   	= 7'b0000001;
-	parameter FETCH_STEP_TWO   	= 7'b0000010;
-	parameter FETCH_STEP_THREE 	= 7'b0000011;
-	parameter DECODE_STEP_ONE  	= 7'b0000100;
-	parameter DECODE_STEP_TWO  	= 7'b0000101;
-  	parameter ADD 			    = 7'b0000110;
-	parameter SUB 			    = 7'b0000111;
-	parameter AND 			    = 7'b0001000;
-	parameter ADD_SUB_AND 	   	= 7'b0001001;
-	parameter SHIFT_SHAMT		= 7'b0001010;
-	parameter SLL				= 7'b0001011;
-	parameter SRL				= 7'b0001100;
-	parameter SRA				= 7'b0001101;
-	parameter SLL_SRA_SRL		= 7'b0001110;
-	parameter ADDI_ADDIU    	= 7'b0001111;
-	parameter ADDI 				= 7'b0010000;
-	parameter ADDIU 			= 7'b0010001;
+	parameter CLOSE_WRITE 	   	= 7'b0000000; // 0
+	parameter FETCH_STEP_ONE   	= 7'b0000001; // 1
+	parameter FETCH_STEP_TWO   	= 7'b0000010; // 2 
+	parameter FETCH_STEP_THREE 	= 7'b0000011; // 3 
+	parameter DECODE_STEP_ONE  	= 7'b0000100; // 4
+	parameter DECODE_STEP_TWO  	= 7'b0000101; // 5
+  	parameter ADD 			    = 7'b0000110; // 6 
+	parameter SUB 			    = 7'b0000111; // 7
+	parameter AND 			    = 7'b0001000; // 8
+	parameter ADD_SUB_AND 	   	= 7'b0001001; // 9
+	parameter SHIFT_SHAMT		= 7'b0001010; // 10
+	parameter SLL				= 7'b0001011; // 11
+	parameter SRL				= 7'b0001100; // 12
+	parameter SRA				= 7'b0001101; // 13
+	parameter SLL_SRA_SRL		= 7'b0001110; // 14
+	parameter ADDI_ADDIU    	= 7'b0001111; // 15 
+	parameter ADDI 				= 7'b0010000; // 16
+	parameter ADDIU 			= 7'b0010001; // 17
 	
 	// parameters do opcode
 	parameter R_INSTRUCTION = 6'b000000;
