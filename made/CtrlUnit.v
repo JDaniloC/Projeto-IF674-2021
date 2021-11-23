@@ -18,7 +18,7 @@ module CtrlUnit (
 		output reg [1:0] reg_dist_ctrl,
 		
 		output reg shift_src_control,
-		output reg [3:0] shift_control,
+		output reg [2:0] shift_control,
 		output reg [1:0] shift_amount_control,
 
 		//inputs
@@ -366,6 +366,7 @@ module CtrlUnit (
 
 				SHIFT_SHAMT: begin
 					
+					a_b_write = 1'b1;
 					shift_control = LOAD_SRC;
           			shift_src_control = 1'b0;
 					shift_amount_control = 2'b10;
@@ -373,7 +374,6 @@ module CtrlUnit (
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
-					a_b_write = 1'b0;
 					reg_write = 1'b0;
 					alu_src_a = 1'b0;
 					alu_src_b = 2'b00;
@@ -407,8 +407,8 @@ module CtrlUnit (
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
-					a_b_write = 1'b0;
 					reg_write = 1'b0;
+					a_b_write = 1'b0;
 					alu_src_a = 1'b0;
 					alu_src_b = 2'b00;
 					pc_source = 2'b00;
