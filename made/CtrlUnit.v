@@ -24,7 +24,8 @@ module CtrlUnit (
 		//inputs
 		input wire [5:0] op_code,
 		input wire [5:0] funct,
-		input wire equal
+		input wire equal,
+		input wire greater
 	);
 
   // parameters of states
@@ -48,6 +49,8 @@ module CtrlUnit (
 	parameter ADDIU 			= 7'b0010001; // 17
 	parameter BEQ_BNE_STEP_ONE  = 7'b0010010; // 18
 	parameter BEQ_BNE_STEP_TWO  = 7'b0010011; // 19 
+	parameter BLE_BGT_STEP_ONE  = 7'b0010100; // 20
+	parameter BLE_BGT_STEP_TWO  = 7'b0010101;  // 21
 	
 	
 	// parameters do opcode
@@ -289,6 +292,14 @@ module CtrlUnit (
 
 						BNE_OPCODE: begin
 							state = BEQ_BNE_STEP_ONE; 
+						end
+
+						BGT_OPCODE: begin
+							state = BLE_BGT_STEP_ONE; 
+						end
+
+						BLE_OPCODE: begin
+							state = BLE_BGT_STEP_ONE;
 						end
 
 					endcase
@@ -654,12 +665,77 @@ module CtrlUnit (
 					endcase
 				end
 
+				BLE_BGT_STEP_ONE: begin
+
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b00;
+					alu_op = ULA_EG_GT_LT;
+					pc_source = 2'b01;
+
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					shift_amount_control = 2'b00;
+
+					state = BLE_BGT_STEP_TWO;
+				end
+
+				BLE_BGT_STEP_TWO: begin
+
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b00;
+					alu_op = ULA_EG_GT_LT;
+					pc_source = 2'b01;
+
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					shift_amount_control = 2'b00;
+
+					state = CLOSE_WRITE;
+
+					case(op_code)
+
+						BGT_OPCODE: begin
+							if(greater == 1'b1) begin
+								pc_write = 1'b1;
+							end else begin
+								pc_write = 1'b0;
+							end
+						end
+
+						BLE_OPCODE: begin
+							if(greater == 1'b0 ) begin
+								pc_write = 1'b1;
+							end else begin
+								pc_write = 1'b0;
+							end
+						end
+					endcase
+				end
 
 				CLOSE_WRITE: begin
 					
 					alu_out_write = 1'b0;
 					reg_dist_ctrl = 2'b00;
-
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;

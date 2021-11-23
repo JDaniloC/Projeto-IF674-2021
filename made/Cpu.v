@@ -453,8 +453,9 @@ module Cpu (
         .reg_dist_ctrl(reg_dist_ctrl),
         .shift_control(shift_control),
         .shift_src_control(shift_src_control),
-        .shift_amount_control(shift_amount_control)
-        .equal(EQ)
+        .shift_amount_control(shift_amount_control),
+        .equal(EQ),
+        .greater(GT)
     );
 
 endmodule
