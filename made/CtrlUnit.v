@@ -16,8 +16,10 @@ module CtrlUnit (
 		output reg [1:0] alu_src_b,
 		output reg [2:0] mem_to_reg,
 		output reg [1:0] reg_dist_ctrl,
-
-		// output reg reset_out,
+		
+		output reg shift_src_control,
+		output reg [3:0] shift_control,
+		output reg [1:0] shift_amount_control,
 
 		//inputs
 		input wire [5:0] op_code,
@@ -37,6 +39,8 @@ module CtrlUnit (
 	parameter ADD_SUB_AND 	   	= 7'b0001001;
 	parameter SHIFT_SHAMT		= 7'b0001010;
 	parameter ADDI_ADDIU    	= 7'b0001011;
+	parameter ADDI 				= 7'b0001100;
+	parameter ADDIU 			= 7'b0001101;
 	
 	// parameters do opcode
 	parameter R_INSTRUCTION = 6'b000000;
@@ -87,6 +91,16 @@ module CtrlUnit (
 	parameter ULA_NOT = 3'b101;
 	parameter ULA_INC = 3'b100;
 
+	// Shift operations
+	
+	parameter DO_NOTHING = 3'b000;
+	parameter LOAD_SRC   = 3'b001;
+	parameter LEFT_ARTH  = 3'b010;
+	parameter RIGHT_LOG  = 3'b011;
+	parameter RIGHT_ART  = 3'b100;
+	parameter ROTATE_RT  = 3'b101;
+	parameter ROTATE_LT  = 3'b110;
+
 	reg [6:0] state;
 
 	initial begin
@@ -111,6 +125,9 @@ module CtrlUnit (
 			pc_control = 1'b0; 
 			memory_write = 1'b0;
 			alu_out_write = 1'b0; 
+			shift_control = 3'b000;
+			shift_src_control = 1'b0;
+			shift_amount_control = 2'b00;
 
 			state = FETCH_STEP_ONE;
 		end else begin 
@@ -345,6 +362,10 @@ module CtrlUnit (
 
 				SHIFT_SHAMT: begin
 					
+					shift_control = 3'b0;
+          			shift_src_control = 1'b0;
+					shift_amount_control = 2'b10;
+
 					case(Funct)
 						SLL_FUNCT: begin
 							state = SLL;
@@ -370,10 +391,79 @@ module CtrlUnit (
 					state = SLL_SRA_SRL;
 				end
 
-				ADDI_ADDIU:
+				ADDI_ADDIU: begin
 
-					
-					
+					alu_src_a = 1'b0;
+					alu_src_b = 2'b00;
+					alu_op = ULA_ADD;
+					alu_out_write = 1'b1;
+
+
+					reg_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					mem_to_reg = 3'b000;
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					pc_source = 2'b00;
+					pc_control = 1'b0;
+					memory_write = 1'b0;
+
+					case (op_code): begin
+						ADDI_OPCODE: begin
+							state = ADDI;
+						end
+
+						ADDIU_OPCODE: begin
+							state = ADDIU;
+						end
+					endcase
+				end
+
+				ADDI: begin
+
+					alu_src_a = 1'b0;
+					alu_src_b = 2'b00;
+					mem_to_reg = 3'b000;
+					reg_dist_ctrl = 2'b00;
+					reg_write = 1'b1;
+
+					alu_op = ULA_LOAD;
+					alu_out_write = 1'b1;
+
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					pc_source = 2'b00;
+					pc_control = 1'b0;
+					memory_write = 1'b0;
+
+					state = CLOSE_WRITE;
+				end
+				
+				ADDIU: begin
+
+					mem_to_reg = 3'b000;
+					reg_dist_ctrl = 2'b00;
+					reg_write = 1'b1;
+
+					alu_op = ULA_LOAD;
+					alu_out_write = 1'b0;
+
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					pc_source = 2'b00;
+					pc_control = 1'b0;
+					memory_write = 1'b0;
+					alu_src_a = 1'b0;
+					alu_src_b = 2'b00;
+
+					state = CLOSE_WRITE;
+				end
 
 				CLOSE_WRITE: begin
 					
@@ -392,6 +482,9 @@ module CtrlUnit (
 					pc_control = 1'b0; 
 					memory_write = 1'b0;
 					mem_to_reg = 3'b000;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					shift_amount_control = 2'b00;
 					
 					state = FETCH_STEP_ONE;
 				end

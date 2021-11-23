@@ -365,10 +365,10 @@ module Cpu (
 
     Mux4BitsOf4Bits mux_shift_amount (
         .selector(shift_amount_control),
-        .data_0(NUMBER_16),
-        .data_1(memory_data_out[4:0]),
-        .data_2(b_out[20:16]),
-        .data_3(IMMEDIATE[10:6]),
+        .data_0(b_out[20:16]),
+        .data_1(NUMBER_16),
+        .data_2(IMMEDIATE[10:6]),
+        .data_3(memory_data_out[4:0]),
 
         .data_output(shift_amount_out)
     );
@@ -444,14 +444,17 @@ module Cpu (
         .a_b_write(a_b_write),
         .reg_write(reg_write),
         .alu_src_b(alu_src_b),
+        .pc_source(pc_source),
+        .alu_src_a(alu_src_a),
         .funct(IMMEDIATE[5:0]),
         .pc_control(pc_control),
+        .mem_to_reg(mem_to_reg),
         .memory_write(read_or_write),
         .alu_out_write(alu_out_write),
         .reg_dist_ctrl(reg_dist_ctrl),
-        .alu_src_a(alu_src_a),
-        .mem_to_reg(mem_to_reg),
-        .pc_source(pc_source)
+        .shift_control(shift_control),
+        .shift_src_control(shift_src_control),
+        .shift_amount_control(shift_amount_control)
     );
 
 endmodule
