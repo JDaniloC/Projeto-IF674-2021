@@ -328,22 +328,6 @@ module Cpu (
     //     .data_1(memory_data_out),
 
 
-
-    SSControl store_s_control (
-        .ss_control(store_size_control),
-        .data(memory_data_out),
-        .b_out(b_out),
-
-        .ss_out(store_size_out)
-    );
-
-    LoadSizeControl load_s_control (
-        .memory_data_out(memory_data_out),
-        .load_size_control(load_control),
-
-        .load_size_control_out(load_size_out)
-    );
-    
     // Mux2Bits mux_store_size (
     //     .selector(store_size_write),
     //     .data_0(b_out),
