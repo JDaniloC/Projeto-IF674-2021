@@ -34,7 +34,6 @@ Essas são as instruções que conseguimos fazer:
 - [x] bne rs, rt, offset 
 - [x] ble rs, rt, offset 
 - [x] bgt rs, rtx, offset 
-- [ ] sram rt, offset(rs) 
 - [ ] lb rt, offset(rs) 
 - [ ] lh rt, offset(rs)
 - [ ] lw rt, offset(rs)
@@ -42,12 +41,13 @@ Essas são as instruções que conseguimos fazer:
 - [x] sb rt, offset(rs)
 - [x] sh rt, offset(rs)
 - [x] sw rt, offset(rs)
+- [ ] sram rt, offset(rs) 
 - [ ] slti rt, rs, imediato
 
 ### Instruções do tipo J
 
-- [x] j offset
-- [x] jal offset
+- [ ] j offset TESTAR
+- [ ] jal offset TESTAR
 
 ### Exceção
 - [ ] Overflow

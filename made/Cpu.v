@@ -91,6 +91,10 @@ module Cpu (
     wire [31:0] shift_left_4_out;
     wire [31:0] extend_ula_1_out;
     wire [31:0] sign_28_to_32_out;
+    
+    wire [27:0] shift_left_26_out;
+    wire [25:0] concatenate_26_to_28_out;
+    wire [31:0] concatenate_28_to_32_out;
 
     // Resultados da ULA
 
@@ -310,6 +314,13 @@ module Cpu (
 
         .ss_out(store_size_out)
     );
+
+    LoadSizeControl load_s_control (
+        .memory_data_out(memory_data_out),
+        .load_size_control(load_control),
+
+        .load_size_control_out(load_size_out)
+    );
     
     // Mux2Bits mux_store_size (
     //     .selector(store_size_write),
@@ -438,6 +449,26 @@ module Cpu (
         .data_in(IMMEDIATE),
         .shift_left_16_out(shift_left_16_out)
     );
+    
+    ShiftLeft26 shift_left_26 (
+        .data_in(concatenate_26_to_28_out),
+        .shift_left_26_out(shift_left_26_out)
+    );
+
+    // Concatenates
+
+    Concatenate26to28 concatenate_offset (
+        RS,
+        RT,
+        IMMEDIATE,
+        concatenate_26_to_28_out
+    );
+
+    Concatenate28to32 concatenate_pc_shift (
+        pc_out,
+        shift_left_26_out,
+        concatenate_28_to_32_out
+    );
 
     // Bloco central
 
@@ -466,7 +497,8 @@ module Cpu (
         .mem_data_write(mem_data_write),
         .shift_src_control(shift_src_control),
         .store_size_control(store_size_control),
-        .shift_amount_control(shift_amount_control)
+        .shift_amount_control(shift_amount_control),
+        .load_size_control(load_control)
     );
 
 endmodule
