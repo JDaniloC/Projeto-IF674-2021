@@ -1040,6 +1040,7 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					shift_amount_control = 2'b00;
 					store_size_control = 2'b00;
+					load_size_control = 2'b00;
 					
                     case (op_code)
                         SW_OPCODE: begin
@@ -1079,6 +1080,7 @@ module CtrlUnit (
 					shift_control = 3'b000;
 					shift_src_control = 1'b0;
 					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
 					
                     state = CLOSE_WRITE;
 				end
@@ -1106,6 +1108,7 @@ module CtrlUnit (
 					shift_control = 3'b000;
 					shift_src_control = 1'b0;
 					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
 					
                     state = CLOSE_WRITE;
 				end
@@ -1133,6 +1136,7 @@ module CtrlUnit (
 					shift_control = 3'b000;
 					shift_src_control = 1'b0;
 					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
 					
                     state = CLOSE_WRITE;
 				end
@@ -1159,6 +1163,7 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
 					
 					state = CLOSE_WRITE;
 				end
@@ -1185,6 +1190,7 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
 					
 					state = CLOSE_WRITE;
 				end
@@ -1210,6 +1216,7 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
 					
 					state = CLOSE_WRITE;
 				end
@@ -1298,6 +1305,208 @@ module CtrlUnit (
 					pc_write = 1'b0;
 					a_b_write = 1'b0;
 					reg_write = 1'b0;
+					pc_source = 2'b00;
+					alu_src_b = 2'b00;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					reg_dist_ctrl = 2'b00;
+					mem_data_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
+					
+					state = JAL_STEP_TWO;
+				end
+				
+				JAL_STEP_TWO: begin
+					
+					reg_write = 1'b1;
+					mem_to_reg = 3'b000;
+					reg_dist_ctrl = 2'b01;
+
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					alu_src_a = 1'b0;
+					pc_source = 2'b00;
+					alu_op = ULA_LOAD;
+					alu_src_b = 2'b00;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					alu_out_write = 1'b0;
+					mem_data_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
+					
+					state = JUMP;
+				end
+
+				JUMP: begin
+					pc_source = 2'b10;
+					pc_write = 1'b1;
+
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					alu_src_a = 1'b0;
+					alu_op = ULA_LOAD;
+					alu_src_b = 2'b00;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					mem_data_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
+					
+					state = CLOSE_WRITE;
+				end
+				
+				LW_LH_LB_STEP_ONE: begin
+
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
+					alu_op = ULA_ADD;
+					i_or_d = 2'b01;
+
+					memory_write = 1'b0;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_source = 2'b00;
+					pc_control = 1'b0; 
+					mem_to_reg = 3'b000;
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					mem_data_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
+
+					state = LW_LH_LB_STEP_TWO; 
+					
+				end
+
+				LW_LH_LB_STEP_TWO: begin
+
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
+					alu_op = ULA_ADD;
+					i_or_d = 2'b01;
+
+					memory_write = 1'b0;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_source = 2'b00;
+					pc_control = 1'b0; 
+					mem_to_reg = 3'b000;
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					mem_data_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
+
+					state = LW_LH_LB_STEP_THREE;
+				end
+
+				LW_LH_LB_STEP_THREE: begin
+
+					mem_data_write = 1'b1;
+
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
+					alu_op = ULA_ADD;
+					i_or_d = 2'b01;
+
+					memory_write = 1'b0;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_source = 2'b00;
+					pc_control = 1'b0; 
+					mem_to_reg = 3'b000;
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
+
+					case (op_code)
+
+						LW_OPCODE: begin 
+							state = LW;
+						end
+
+						LH_OPCODE: begin
+							state = LH;
+						end
+
+						LB_OPCODE: begin
+							state = LB;
+						end
+					endcase
+				end
+
+				LW: begin
+
+					mem_to_reg = 3'b001;
+					reg_dist_ctrl = 2'b00;
+					load_size_control = 2'b01;
+					i_or_d = 2'b01;
+
+
+
+					mem_data_write = 1'b0;
+					alu_src_a = 1'b0;
+					alu_src_b = 2'b00;
+					alu_op = ULA_LOAD;
+					
+
+					memory_write = 1'b0;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
+					pc_source = 2'b00;
+					pc_control = 1'b0; 
+					alu_out_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					
+				end
+				
+				CLOSE_WRITE: begin
+					
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					reg_write = 1'b0;
 					alu_src_a = 1'b0;
 					pc_source = 2'b00;
 					alu_op = ULA_LOAD;
@@ -1312,6 +1521,7 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
+					load_size_control = 2'b00;
 					
 					state = FETCH_STEP_ONE;
 				end
