@@ -11,23 +11,20 @@ Essas são as instruções que conseguimos fazer:
 - [x] add rd, rs, rt
 - [x] and rd, rs, rt
 - [x] sub rd, rs, rt
-- [ ] div rs, rt
-- [ ] mult rs, rt
-- [ ] jr rs
-- [ ] mfhi rd
-- [ ] mflo rd
 - [x] sll rd, rt, shamt
 - [x] sra rd, rt, shamt
 - [x] srl rd, rt, shamt 
 - [x] sllv rd, rs, rt
 - [x] srav rd, rs, rt
-- [ ] slt rd, rs, rt
-- [ ] break 
-- [ ] Rte 
+- [x] slt rd, rs, rt
+- [x] jr rs
+- [x] break 
+- [x] Rte 
+- [ ] div rs, rt
+- [ ] mult rs, rt
+- [ ] mfhi rd
+- [ ] mflo rd
 - [ ] divm rs,rt
-
-slt 3, 1, 2
-slt 3, 2, 1
 
 ### Instruções do tipo I
 
@@ -45,7 +42,7 @@ slt 3, 2, 1
 - [ ] sb rt, offset(rs)
 - [ ] sh rt, offset(rs)
 - [ ] slti rt, rs, imediato
-- [ ] sw rt, offset(rs)
+- [x] sw rt, offset(rs)
 
 ### Instruções do tipo J
 
@@ -54,5 +51,5 @@ slt 3, 2, 1
 
 ### Exceção
 - [ ] Overflow
-- [ ] div 0
+- [ ] div by 0
 - [ ] opcode inexistente
