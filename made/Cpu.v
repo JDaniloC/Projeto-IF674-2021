@@ -52,7 +52,6 @@ module Cpu (
     wire [31:0] memory_out;
     wire [31:0] memory_data_out;
     wire [31:0] load_size_out;
-    wire [31:0] mem_data_out;
     
     wire [31:0] pc_source_out;
     wire [31:0] pc_control_out;
@@ -278,10 +277,10 @@ module Cpu (
     Registrador store_size_reg (
         .Clk(clock),
         .Reset(reset),
-        .Load(store_control),
-        .Entrada(mux_store_size_out),
+        .Load(mem_data_write),
+        .Entrada(memory_out),
         
-        .Saida(store_size_out)
+        .Saida(memory_data_out)
     );
    
     Registrador load_size_reg (
@@ -304,9 +303,9 @@ module Cpu (
     );
 
 
-    SSControl ss_control (
+    SSControl store_s_control (
         .ss_control(store_size_control),
-        .data(mem_data_out),
+        .data(memory_data_out),
         .b_out(b_out),
 
         .ss_out(store_size_out)
@@ -466,8 +465,8 @@ module Cpu (
         .shift_control(shift_control),
         .mem_data_write(mem_data_write),
         .shift_src_control(shift_src_control),
-        .shift_amount_control(shift_amount_control),
-        .store_size_control(store_size_control)
+        .store_size_control(store_size_control),
+        .shift_amount_control(shift_amount_control)
     );
 
 endmodule

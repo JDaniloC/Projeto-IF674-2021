@@ -1,4 +1,4 @@
-module ss_control(
+module SSControl(
     input   wire    [1:0]   ss_control,
     input   wire    [31:0]  data,
     input   wire    [31:0]  b_out,
