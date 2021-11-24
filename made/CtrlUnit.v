@@ -599,7 +599,7 @@ module CtrlUnit (
 				BEQ_BNE_STEP_ONE: begin
 
 					alu_src_a = 1'b1;
-					alu_src_b = 2'b10;
+					alu_src_b = 2'b00;
 					alu_op = ULA_EG_GT_LT;
 					pc_source = 2'b01;
 
@@ -622,11 +622,9 @@ module CtrlUnit (
 
 				BEQ_BNE_STEP_TWO: begin
 
-					alu_src_b = 2'b00;
-
 					alu_src_a = 1'b1;
+					alu_src_b = 2'b00;
 					alu_op = ULA_EG_GT_LT;
-					pc_source = 2'b01;
 					pc_source = 2'b01;
 
 					alu_out_write = 1'b0;
