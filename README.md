@@ -29,11 +29,11 @@ Essas são as instruções que conseguimos fazer:
 ### Instruções do tipo I
 
 - [x] addi rt, rs, imediato
-- [x] addiu rt, rs, imediato
-- [ ] beq rs,rt, offset
-- [ ] bne rs, rt, offset 
-- [ ] ble rs, rt, offset 
-- [ ] bgt rs, rtx, offset 
+- [ ] addiu rt, rs, imediato
+- [x] beq rs,rt, offset
+- [x] bne rs, rt, offset 
+- [x] ble rs, rt, offset 
+- [x] bgt rs, rtx, offset 
 - [ ] sram rt, offset(rs) 
 - [ ] lb rt, offset(rs) 
 - [ ] lh rt, offset(rs)
