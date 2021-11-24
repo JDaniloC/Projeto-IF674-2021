@@ -11,7 +11,7 @@ module Cpu (
     wire read_or_write;
     wire mem_data_write;
     
-    wire store_size_write;
+    wire [1:0] store_size_control;
     
     wire pc_write;
     wire pc_control;
@@ -52,6 +52,7 @@ module Cpu (
     wire [31:0] memory_out;
     wire [31:0] memory_data_out;
     wire [31:0] load_size_out;
+    wire [31:0] mem_data_out;
     
     wire [31:0] pc_source_out;
     wire [31:0] pc_control_out;
@@ -301,14 +302,23 @@ module Cpu (
 
         .data_output(alu_src_a_out)
     );
-    
-    Mux2Bits mux_store_size (
-        .selector(store_size_write),
-        .data_0(b_out),
-        .data_1(memory_data_out),
 
-        .data_output(mux_store_size_out)
+
+    SSControl ss_control (
+        .ss_control(store_size_control),
+        .data(mem_data_out),
+        .b_out(b_out),
+
+        .ss_out(store_size_out)
     );
+    
+    // Mux2Bits mux_store_size (
+    //     .selector(store_size_write),
+    //     .data_0(b_out),
+    //     .data_1(memory_data_out),
+
+    //     .data_output(mux_store_size_out)
+    // );
 
     Mux4Bits mux_alu_src_b (
         .selector(alu_src_b),
@@ -364,7 +374,7 @@ module Cpu (
 
     Mux4BitsOf4Bits mux_shift_amount (
         .selector(shift_amount_control),
-        .data_0(b_out[20:16]),
+        .data_0(b_out[4:0]),
         .data_1(NUMBER_16),
         .data_2(IMMEDIATE[10:6]),
         .data_3(memory_data_out[4:0]),
@@ -435,6 +445,8 @@ module Cpu (
     CtrlUnit cpu_ctrl (
         .clock(clock),
         .reset(reset),
+        .greater(GT),
+        .equal(EQ),
         .i_or_d(i_or_d),
         .op_code(OPCODE),
         .ir_write(ir_write),
@@ -452,10 +464,10 @@ module Cpu (
         .alu_out_write(alu_out_write),
         .reg_dist_ctrl(reg_dist_ctrl),
         .shift_control(shift_control),
+        .mem_data_write(mem_data_write),
         .shift_src_control(shift_src_control),
         .shift_amount_control(shift_amount_control),
-        .equal(EQ),
-        .greater(GT)
+        .store_size_control(store_size_control)
     );
 
 endmodule

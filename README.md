@@ -17,14 +17,17 @@ Essas são as instruções que conseguimos fazer:
 - [ ] mfhi rd
 - [ ] mflo rd
 - [x] sll rd, rt, shamt
-- [ ] sllv rd, rt, rt
-- [ ] slt rd, rs, rt
 - [x] sra rd, rt, shamt
-- [ ] srav rd, rs, rt
 - [x] srl rd, rt, shamt 
+- [x] sllv rd, rs, rt
+- [x] srav rd, rs, rt
+- [ ] slt rd, rs, rt
 - [ ] break 
 - [ ] Rte 
 - [ ] divm rs,rt
+
+slt 3, 1, 2
+slt 3, 2, 1
 
 ### Instruções do tipo I
 
