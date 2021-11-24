@@ -37,17 +37,17 @@ Essas são as instruções que conseguimos fazer:
 - [ ] sram rt, offset(rs) 
 - [ ] lb rt, offset(rs) 
 - [ ] lh rt, offset(rs)
-- [ ] lui rt, imediato
 - [ ] lw rt, offset(rs)
-- [ ] sb rt, offset(rs)
-- [ ] sh rt, offset(rs)
-- [ ] slti rt, rs, imediato
+- [ ] lui rt, imediato
+- [x] sb rt, offset(rs)
+- [x] sh rt, offset(rs)
 - [x] sw rt, offset(rs)
+- [ ] slti rt, rs, imediato
 
 ### Instruções do tipo J
 
-- [ ] j offset
-- [ ] jal offset
+- [x] j offset
+- [x] jal offset
 
 ### Exceção
 - [ ] Overflow
