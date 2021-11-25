@@ -1042,14 +1042,14 @@ module CtrlUnit (
 
 				SW_SH_SB_STEP_ONE: begin
 
-					alu_src_a = 1'b1;
+					alu_src_a = 1'b1; // OK
 					low_write = 1'b0;
 					high_write = 1'b0;
-					alu_src_b = 2'b10;
-					alu_op = ULA_ADD;
-					alu_out_write = 1'b1;
-					i_or_d = 2'b01;
-					memory_write = 1'b0;
+					alu_src_b = 2'b10; // OK
+					alu_op = ULA_ADD; // OK
+					alu_out_write = 1'b1; // OK
+					i_or_d = 2'b01; // OK
+					memory_write = 1'b0; // OK
 
 					reg_dist_ctrl = 2'b00;
 					ir_write = 1'b0;
@@ -1072,15 +1072,16 @@ module CtrlUnit (
 				
 				SW_SH_SB_STEP_TWO: begin
 
-					alu_out_write = 1'b0;
+					alu_out_write = 1'b0; // OK
 
-					alu_src_a = 1'b1;
+					alu_src_a = 1'b1; // OK
 					low_write = 1'b0;
 					high_write = 1'b0;
-					alu_src_b = 2'b10;
-					alu_op = ULA_ADD;
-					i_or_d = 2'b01;
-					memory_write = 1'b0;
+					alu_src_b = 2'b10; // OK
+					alu_op = ULA_ADD; // OK
+					i_or_d = 2'b01; // OK
+					memory_write = 1'b0; // OK
+
 					reg_dist_ctrl = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
@@ -1101,17 +1102,17 @@ module CtrlUnit (
 
 				SW_SH_SB_STEP_THREE: begin
 					
-					mem_data_write = 1'b1;
+					mem_data_write = 1'b1; // OK
 
-					alu_out_write = 1'b0;
-					alu_src_a = 1'b1;
+					alu_out_write = 1'b0; // OK
+					alu_src_a = 1'b1; // OK
 					low_write = 1'b0;
 					high_write = 1'b0;
-					alu_src_b = 2'b10;
-					alu_op = ULA_ADD;
-					i_or_d = 2'b01;
+					alu_src_b = 2'b10; // OK
+					alu_op = ULA_ADD; // OK
+					i_or_d = 2'b01; // OK 
                     
-					memory_write = 1'b0;
+					memory_write = 1'b0; // OK
 					reg_dist_ctrl = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
@@ -1154,7 +1155,7 @@ module CtrlUnit (
 					low_write = 1'b0;
 					high_write = 1'b0;
 					alu_src_b = 2'b00;
-					alu_op = ULA_ADD;
+					alu_op = ULA_LOAD;
 					reg_dist_ctrl = 2'b00;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
@@ -1403,8 +1404,6 @@ module CtrlUnit (
 				LW_LH_LB_STEP_ONE: begin
 
 					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
 					alu_src_b = 2'b10;
 					alu_op = ULA_ADD;
 					i_or_d = 2'b01;
@@ -1425,6 +1424,8 @@ module CtrlUnit (
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
 					load_size_control = 2'b00;
+					low_write = 1'b0;
+					high_write = 1'b0;
 
 					state = LW_LH_LB_STEP_TWO; 
 					
@@ -1707,21 +1708,26 @@ module CtrlUnit (
 				end
 
 				LUI: begin
+
 					mem_to_reg = 3'b110;
 					reg_dist_ctrl = 2'b00;
 					reg_write = 1'b1;
 
 					i_or_d = 2'b00;
+					div_src = 1'b0;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
+					div_start = 1'b0;
 					a_b_write = 1'b0;
 					alu_src_a = 1'b0;
 					low_write = 1'b0;
+					mult_start = 1'b0;
 					high_write = 1'b0;
 					pc_source = 2'b00;
 					alu_op = ULA_LOAD;
 					alu_src_b = 2'b00;
 					pc_control = 1'b0; 
+					div_or_mult = 1'b0;
 					memory_write = 1'b0;
 					alu_out_write = 1'b0;
 					mem_data_write = 1'b0;

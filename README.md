@@ -37,7 +37,7 @@ Essas são as instruções que conseguimos fazer:
 - [ ] lb rt, offset(rs) 
 - [ ] lh rt, offset(rs)
 - [ ] lw rt, offset(rs)
-- [ ] lui rt, imediato
+- [x] lui rt, imediato
 - [x] sb rt, offset(rs)
 - [x] sh rt, offset(rs)
 - [x] sw rt, offset(rs)
