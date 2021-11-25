@@ -33,19 +33,23 @@ module Cpu (
     
     wire div_or_mult;
     wire div_control;
+    wire [31:0] div_lo_out;
+    wire [31:0] mult_lo_out;
+    wire [31:0] div_hi_out;
+    wire [31:0] mult_hi_out;
 
     wire high_write;
     wire low_write;
     wire store_control;
     wire [1:0] load_control;
     
-    wire start_div;
-    wire stop_div;
-    wire start_multi;
-    wire stop_multi;
+    wire div_end;
+    wire div_start;
+    wire div_0_exception;
+    wire mult_start;
+    wire mult_end;
     
-    wire div_src_a;
-    wire div_src_b;
+    wire div_src;
 
     // Fios de dados
 
@@ -81,8 +85,8 @@ module Cpu (
     
     wire [31:0] hi_out;
     wire [31:0] lo_out;
-    wire [31:0] mult_div_hi_out;
-    wire [31:0] mult_div_lo_out;
+    wire [31:0] div_mult_hi_out;
+    wire [31:0] div_mult_lo_out;
     wire [31:0] div_src_a_out;
     wire [31:0] div_src_b_out;
 
@@ -180,29 +184,30 @@ module Cpu (
         .Instr15_0(IMMEDIATE)
     );
 
-    // Multi e Div
+    // Mult e Div
 
     Div divisor (
         .clock(clock),
         .reset(reset),
         .A(div_src_a_out),
         .B(div_src_b_out),
-        .HI(mult_div_hi_out),
-        .LO(mult_div_lo_out),
-        .div_0(start_div),
-        .div_stop(stop_div)
+        .div_end(div_end),
+        .HI(div_hi_out),
+        .LO(div_lo_out),
+        .div_start(div_start),
+        .div_0_exception(div_0_exception)
     );
     
-    // Mult multiplicador (
-    //     .clock(clock),
-    //     .reset(reset),
-    //     .A(a_out),
-    //     .B(b_out),
-    //     .HI(mult_div_hi_out),
-    //     .LO(mult_div_lo_out),
-    //     .mult_in(start_multi),
-    //     .mult_out(stop_multi)
-    // );
+    Mult multiplicador (
+        .clock(clock),
+        .reset(reset),
+        .A(a_out),
+        .B(b_out),
+        .HI(mult_hi_out),
+        .LO(mult_lo_out),
+        .mult_start(mult_start),
+        .mult_end(mult_end)
+    );
 
     // Registradores  
 
@@ -228,7 +233,7 @@ module Cpu (
         .Clk(clock),
         .Reset(reset),
         .Load(high_write),
-        .Entrada(mult_div_hi_out),
+        .Entrada(div_mult_hi_out),
 
         .Saida(hi_out)
     );
@@ -237,7 +242,7 @@ module Cpu (
         .Clk(clock),
         .Reset(reset),
         .Load(low_write),
-        .Entrada(mult_div_lo_out),
+        .Entrada(div_mult_lo_out),
         
         .Saida(lo_out)
     );
@@ -346,21 +351,37 @@ module Cpu (
         .data_output(alu_src_b_out)
     );
     
-    // Mux2Bits mux_div_src_a (
-    //     .selector(div_src_a),
-    //     .data_0(memory_data_out),
-    //     .data_1(a_out),
+    Mux2Bits mux_div_src_a (
+        .selector(div_src),
+        .data_0(a_out),
+        .data_1(memory_data_out),
 
-    //     .data_output(div_src_a_out)
-    // );
+        .data_output(div_src_a_out)
+    );
 
-    // Mux2Bits mux_div_src_b (
-    //     .selector(div_src_b),
-    //     .data_0(memory_out),
-    //     .data_1(b_out),
+    Mux2Bits mux_div_src_b (
+        .selector(div_src),
+        .data_0(b_out),
+        .data_1(memory_out),
 
-    //     .data_output(div_src_b_out)
-    // );
+        .data_output(div_src_b_out)
+    );
+    
+    Mux2Bits mux_div_or_mult_lo (
+        .selector(div_or_mult),
+        .data_0(div_lo_out),
+        .data_1(mult_lo_out),
+
+        .data_output(div_mult_lo_out)
+    );
+    
+    Mux2Bits mux_div_or_mult_hi (
+        .selector(div_or_mult),
+        .data_0(div_hi_out),
+        .data_1(mult_hi_out),
+
+        .data_output(div_mult_hi_out)
+    );
     
     Mux2Bits mux_pc_control (
         .selector(pc_control),
@@ -402,7 +423,7 @@ module Cpu (
         .selector(pc_source),
         .data_0(alu_out),
         .data_1(alu_out_reg_out),
-        .data_2(sign_28_to_32_out),
+        .data_2(concatenate_28_to_32_out),
         .data_3(epc_out),
         
         .data_output(pc_source_out)
@@ -485,26 +506,34 @@ module Cpu (
         .equal(EQ),
         .i_or_d(i_or_d),
         .op_code(OPCODE),
+        .div_end(div_end),
+        .div_src(div_src),
         .ir_write(ir_write),
         .pc_write(pc_write),
+        .mult_end(mult_end),
         .alu_op(alu_control),
+        .div_start(div_start),
         .a_b_write(a_b_write),
         .reg_write(reg_write),
         .alu_src_b(alu_src_b),
         .pc_source(pc_source),
         .alu_src_a(alu_src_a),
+        .low_write(low_write),
         .funct(IMMEDIATE[5:0]),
+        .mult_start(mult_start),
+        .high_write(high_write),
         .pc_control(pc_control),
         .mem_to_reg(mem_to_reg),
+        .div_or_mult(div_or_mult),
         .memory_write(read_or_write),
         .alu_out_write(alu_out_write),
         .reg_dist_ctrl(reg_dist_ctrl),
         .shift_control(shift_control),
         .mem_data_write(mem_data_write),
+        .load_size_control(load_control),
         .shift_src_control(shift_src_control),
         .store_size_control(store_size_control),
-        .shift_amount_control(shift_amount_control),
-        .load_size_control(load_control)
+        .shift_amount_control(shift_amount_control)
     );
 
 endmodule

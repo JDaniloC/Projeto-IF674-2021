@@ -46,8 +46,8 @@ Essas são as instruções que conseguimos fazer:
 
 ### Instruções do tipo J
 
-- [ ] j offset TESTAR
-- [ ] jal offset TESTAR
+- [x] j offset
+- [x] jal offset
 
 ### Exceção
 - [ ] Overflow
