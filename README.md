@@ -34,9 +34,9 @@ Essas são as instruções que conseguimos fazer:
 - [x] bne rs, rt, offset 
 - [x] ble rs, rt, offset 
 - [x] bgt rs, rtx, offset 
-- [ ] lb rt, offset(rs) 
-- [ ] lh rt, offset(rs)
-- [ ] lw rt, offset(rs)
+- [x] lb rt, offset(rs) 
+- [x] lh rt, offset(rs)
+- [x] lw rt, offset(rs)
 - [x] lui rt, imediato
 - [x] sb rt, offset(rs)
 - [x] sh rt, offset(rs)
