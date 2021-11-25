@@ -65,7 +65,7 @@ module Mult (
                 counter = -1;
             end
 
-            if(counter == -1 ) begin
+            if (counter == -1 ) begin
                 product = 65'd0;
                 comp = 32'd0;
                 sub = 65'd0;

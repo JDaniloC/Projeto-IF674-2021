@@ -20,7 +20,7 @@ Essas são as instruções que conseguimos fazer:
 - [x] jr rs
 - [x] break 
 - [x] Rte 
-- [ ] div rs, rt
+- [x] div rs, rt
 - [ ] mult rs, rt
 - [ ] mfhi rd
 - [ ] mflo rd
