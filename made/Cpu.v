@@ -292,14 +292,14 @@ module Cpu (
         .Saida(memory_data_out)
     );
    
-    // Registrador load_size_reg (
-    //     .Clk(clock),
-    //     .Reset(reset),
-    //     .Load(load_control),
-    //     .Entrada(memory_data_out),
+    Registrador load_size_reg (
+        .Clk(clock),
+        .Reset(reset),
+        .Load(load_control),
+        .Entrada(memory_data_out),
         
-    //     .Saida(load_size_out)
-    // );
+        .Saida(load_size_out)
+    );
 
     // Blocos de controle
 

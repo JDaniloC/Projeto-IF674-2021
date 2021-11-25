@@ -21,9 +21,9 @@ Essas são as instruções que conseguimos fazer:
 - [x] break 
 - [x] Rte 
 - [x] div rs, rt
-- [ ] mult rs, rt
-- [ ] mfhi rd
-- [ ] mflo rd
+- [x] mult rs, rt
+- [x] mfhi rd
+- [x] mflo rd
 - [ ] divm rs,rt
 
 ### Instruções do tipo I
