@@ -11,40 +11,45 @@ Essas são as instruções que conseguimos fazer:
 - [x] add rd, rs, rt
 - [x] and rd, rs, rt
 - [x] sub rd, rs, rt
+- [x] sll rd, rt, shamt
+- [x] sra rd, rt, shamt
+- [x] srl rd, rt, shamt 
+- [x] sllv rd, rs, rt
+- [x] srav rd, rs, rt
+- [x] slt rd, rs, rt
+- [x] jr rs
+- [x] break 
+- [x] Rte 
 - [ ] div rs, rt
 - [ ] mult rs, rt
-- [ ] jr rs
 - [ ] mfhi rd
 - [ ] mflo rd
-- [ ] sll rd, rt, shamt
-- [ ] sllv rd, rt, rt
-- [ ] slt rd, rs, rt
-- [ ] sra rd, rt, shamt
-- [ ] srav rd, rs, rt
-- [ ] srl rd, rt, shamt 
-- [ ] break 
-- [ ] Rte 
 - [ ] divm rs,rt
 
 ### Instruções do tipo I
 
-- [ ] addi rt, rs, imediato
+- [x] addi rt, rs, imediato
 - [ ] addiu rt, rs, imediato
-- [ ] beq rs,rt, offset
-- [ ] bne rs, rt, offset 
-- [ ] ble rs, rt, offset 
-- [ ] bgt rs, rtx, offset 
-- [ ] sram rt, offset(rs) 
+- [x] beq rs,rt, offset
+- [x] bne rs, rt, offset 
+- [x] ble rs, rt, offset 
+- [x] bgt rs, rtx, offset 
 - [ ] lb rt, offset(rs) 
 - [ ] lh rt, offset(rs)
-- [ ] lui rt, imediato
 - [ ] lw rt, offset(rs)
-- [ ] sb rt, offset(rs)
-- [ ] sh rt, offset(rs)
+- [ ] lui rt, imediato
+- [x] sb rt, offset(rs)
+- [x] sh rt, offset(rs)
+- [x] sw rt, offset(rs)
+- [ ] sram rt, offset(rs) 
 - [ ] slti rt, rs, imediato
-- [ ] sw rt, offset(rs)
 
 ### Instruções do tipo J
 
-- [ ] j offset
-- [ ] jal offset
+- [ ] j offset TESTAR
+- [ ] jal offset TESTAR
+
+### Exceção
+- [ ] Overflow
+- [ ] div by 0
+- [ ] opcode inexistente

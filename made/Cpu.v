@@ -11,7 +11,7 @@ module Cpu (
     wire read_or_write;
     wire mem_data_write;
     
-    wire store_size_write;
+    wire [1:0] store_size_control;
     
     wire pc_write;
     wire pc_control;
@@ -23,7 +23,7 @@ module Cpu (
     wire [1:0] alu_src_b;
     wire [2:0] alu_control;
     
-    wire shift_src_control;
+    wire ft_src_control;
     wire [1:0] exp_control;
     wire [2:0] shift_control;
     wire [1:0] shift_amount_control;
@@ -86,12 +86,15 @@ module Cpu (
     wire [31:0] div_src_a_out;
     wire [31:0] div_src_b_out;
 
-    wire [31:0] sign_extend_16to32_out;
     wire [31:0] extend_immediate_out;
     wire [31:0] shift_left_16_out;
     wire [31:0] shift_left_4_out;
     wire [31:0] extend_ula_1_out;
     wire [31:0] sign_28_to_32_out;
+    
+    wire [27:0] shift_left_26_out;
+    wire [25:0] concatenate_26_to_28_out;
+    wire [31:0] concatenate_28_to_32_out;
 
     // Resultados da ULA
 
@@ -278,10 +281,10 @@ module Cpu (
     Registrador store_size_reg (
         .Clk(clock),
         .Reset(reset),
-        .Load(store_control),
-        .Entrada(mux_store_size_out),
+        .Load(mem_data_write),
+        .Entrada(memory_out),
         
-        .Saida(store_size_out)
+        .Saida(memory_data_out)
     );
    
     Registrador load_size_reg (
@@ -302,20 +305,36 @@ module Cpu (
 
         .data_output(alu_src_a_out)
     );
-    
-    Mux2Bits mux_store_size (
-        .selector(store_size_write),
-        .data_0(b_out),
-        .data_1(memory_data_out),
 
-        .data_output(mux_store_size_out)
+
+    SSControl store_s_control (
+        .ss_control(store_size_control),
+        .data(memory_data_out),
+        .b_out(b_out),
+
+        .ss_out(store_size_out)
     );
+
+    LoadSizeControl load_s_control (
+        .memory_data_out(memory_data_out),
+        .load_size_control(load_control),
+
+        .load_size_control_out(load_size_out)
+    );
+    
+    // Mux2Bits mux_store_size (
+    //     .selector(store_size_write),
+    //     .data_0(b_out),
+    //     .data_1(memory_data_out),
+
+    //     .data_output(mux_store_size_out)
+    // );
 
     Mux4Bits mux_alu_src_b (
         .selector(alu_src_b),
         .data_0(b_out),
         .data_1(NUMBER_4),
-        .data_2(shift_left_16_out),
+        .data_2(extend_immediate_out),
         .data_3(shift_left_4_out),
 
         .data_output(alu_src_b_out)
@@ -365,10 +384,10 @@ module Cpu (
 
     Mux4BitsOf4Bits mux_shift_amount (
         .selector(shift_amount_control),
-        .data_0(NUMBER_16),
-        .data_1(memory_data_out[4:0]),
-        .data_2(b_out[20:16]),
-        .data_3(IMMEDIATE[10:6]),
+        .data_0(b_out[4:0]),
+        .data_1(NUMBER_16),
+        .data_2(IMMEDIATE[10:6]),
+        .data_3(memory_data_out[4:0]),
 
         .data_output(shift_amount_out)
     );
@@ -430,12 +449,34 @@ module Cpu (
         .data_in(IMMEDIATE),
         .shift_left_16_out(shift_left_16_out)
     );
+    
+    ShiftLeft26 shift_left_26 (
+        .data_in(concatenate_26_to_28_out),
+        .shift_left_26_out(shift_left_26_out)
+    );
+
+    // Concatenates
+
+    Concatenate26to28 concatenate_offset (
+        RS,
+        RT,
+        IMMEDIATE,
+        concatenate_26_to_28_out
+    );
+
+    Concatenate28to32 concatenate_pc_shift (
+        pc_out,
+        shift_left_26_out,
+        concatenate_28_to_32_out
+    );
 
     // Bloco central
 
     CtrlUnit cpu_ctrl (
         .clock(clock),
         .reset(reset),
+        .greater(GT),
+        .equal(EQ),
         .i_or_d(i_or_d),
         .op_code(OPCODE),
         .ir_write(ir_write),
@@ -444,14 +485,20 @@ module Cpu (
         .a_b_write(a_b_write),
         .reg_write(reg_write),
         .alu_src_b(alu_src_b),
+        .pc_source(pc_source),
+        .alu_src_a(alu_src_a),
         .funct(IMMEDIATE[5:0]),
         .pc_control(pc_control),
+        .mem_to_reg(mem_to_reg),
         .memory_write(read_or_write),
         .alu_out_write(alu_out_write),
         .reg_dist_ctrl(reg_dist_ctrl),
-        .alu_src_a(alu_src_a),
-        .mem_to_reg(mem_to_reg),
-        .pc_source(pc_source)
+        .shift_control(shift_control),
+        .mem_data_write(mem_data_write),
+        .shift_src_control(shift_src_control),
+        .store_size_control(store_size_control),
+        .shift_amount_control(shift_amount_control),
+        .load_size_control(load_control)
     );
 
 endmodule
