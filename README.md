@@ -20,7 +20,7 @@ Essas são as instruções que conseguimos fazer:
 - [x] jr rs
 - [x] break 
 - [x] Rte 
-- [ ] div rs, rt
+- [x] div rs, rt
 - [ ] mult rs, rt
 - [ ] mfhi rd
 - [ ] mflo rd
@@ -34,10 +34,10 @@ Essas são as instruções que conseguimos fazer:
 - [x] bne rs, rt, offset 
 - [x] ble rs, rt, offset 
 - [x] bgt rs, rtx, offset 
-- [ ] lb rt, offset(rs) 
-- [ ] lh rt, offset(rs)
-- [ ] lw rt, offset(rs)
-- [ ] lui rt, imediato
+- [x] lb rt, offset(rs) 
+- [x] lh rt, offset(rs)
+- [x] lw rt, offset(rs)
+- [x] lui rt, imediato
 - [x] sb rt, offset(rs)
 - [x] sh rt, offset(rs)
 - [x] sw rt, offset(rs)
@@ -46,8 +46,8 @@ Essas são as instruções que conseguimos fazer:
 
 ### Instruções do tipo J
 
-- [ ] j offset TESTAR
-- [ ] jal offset TESTAR
+- [x] j offset
+- [x] jal offset
 
 ### Exceção
 - [ ] Overflow
