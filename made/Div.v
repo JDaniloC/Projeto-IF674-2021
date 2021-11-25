@@ -58,6 +58,7 @@ module Div (
 
 				if (counter == 0) begin
 					HI = rest;
+					counter = -1;
 					LO = quotient;
 					div_end = 1'b1;
 				end
