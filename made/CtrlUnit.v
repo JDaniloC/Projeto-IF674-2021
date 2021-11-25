@@ -74,6 +74,7 @@ module CtrlUnit (
 	parameter LW 					= 7'b0100111; // 39
 	parameter LH  					= 7'b0101000; // 40
 	parameter LB 					= 7'b0101001; // 41
+	parameter LUI 					= 7'b0101010;
 	
 	// parameters do opcode
 	
@@ -401,6 +402,10 @@ module CtrlUnit (
 
 						LH_OPCODE: begin
 							state =  LW_LH_LB_STEP_ONE; 
+						end
+
+						LUI_OPCODE: begin
+							state = LUI;
 						end
 					endcase
 				end
@@ -1402,8 +1407,8 @@ module CtrlUnit (
 					mem_to_reg = 3'b001;
 					reg_dist_ctrl = 2'b00;
 					load_size_control = 2'b01;
+					reg_write = 1'b1;
 					i_or_d = 2'b01;
-
 
 
 					mem_data_write = 1'b0;
@@ -1415,8 +1420,7 @@ module CtrlUnit (
 					memory_write = 1'b0;
 					ir_write = 1'b0;
 					pc_write = 1'b0;
-					a_b_write = 1'b0;
-					reg_write = 1'b0;
+					a_b_write = 1'b0;					
 					pc_source = 2'b00;
 					pc_control = 1'b0; 
 					alu_out_write = 1'b0;
@@ -1425,6 +1429,32 @@ module CtrlUnit (
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
 					
+				end
+
+				LUI: begin
+					mem_to_reg = 3'b110;
+					reg_dist_ctrl = 2'b00;
+					reg_write = 1'b0;
+
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					alu_src_a = 1'b0;
+					pc_source = 2'b00;
+					alu_op = ULA_LOAD;
+					alu_src_b = 2'b00;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					alu_out_write = 1'b0;
+					mem_data_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					load_size_control = 2'b00;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+
+					state = CLOSE_WRITE;
 				end
 				
 				CLOSE_WRITE: begin
