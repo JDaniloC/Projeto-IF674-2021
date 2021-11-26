@@ -122,7 +122,6 @@ module CtrlUnit (
 	parameter BNE_OPCODE 	= 6'b000101;
 	parameter BLE_OPCODE 	= 6'b000110;
 	parameter BGT_OPCODE 	= 6'b000111;
-	parameter BLM_OPCODE 	= 6'b000001;
 	parameter LB_OPCODE 	= 6'b100000;
 	parameter LH_OPCODE 	= 6'b100001;
 	parameter LUI_OPCODE 	= 6'b001111;
@@ -141,7 +140,6 @@ module CtrlUnit (
 	parameter SRL_FUNCT 	= 6'b000010;
 	parameter SRA_FUNCT 	= 6'b000011;
 	parameter SLLV_FUNCT 	= 6'b000100;
-	parameter XCHG_FUNCT 	= 6'b000101;
 	parameter SRAV_FUNCT 	= 6'b000111;
 	parameter JR_FUNCT 		= 6'b001000;
 	parameter BREAK_FUNCT 	= 6'b001101;
