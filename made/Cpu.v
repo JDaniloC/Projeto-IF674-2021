@@ -439,8 +439,8 @@ module Cpu (
         .data_out_32(extend_ula_1_out)
     );
 
-    SignExtend8 extend_memory (
-        .memory_data(memory_data_out),
+    SignExtend8 extend_memory ( // Is this really necessary?
+        .memory_data(memory_out), // To be read from memory_data_out it's needed one clock more
         .sign_out_32(extend_memory_out)
     );
 
