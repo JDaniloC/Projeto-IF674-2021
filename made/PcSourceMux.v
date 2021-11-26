@@ -6,7 +6,7 @@ module PcSourceMux (
     input wire [31:0] data_3,
     input wire [31:0] data_4,
 
-    output wire [31:0] data_output
+    output reg [31:0] data_output
 );
 
     parameter s0 = 3'b000, s1 = 3'b001, s2 = 3'b010, s3 = 3'b011, s4 = 3'b100; 

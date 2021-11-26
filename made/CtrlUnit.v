@@ -47,7 +47,7 @@ module CtrlUnit (
 	);
 
   // parameters of states
-	parameter CLOSE_WRITE 	   	    = 7'b1000000; // 64
+	parameter CLOSE_WRITE 	   	    = 7'b1111111; // 
 	parameter FETCH_STEP_ONE   	    = 7'b0000001; // 1
 	parameter FETCH_STEP_TWO   	    = 7'b0000010; // 2 
 	parameter FETCH_STEP_THREE 	    = 7'b0000011; // 3 
@@ -68,7 +68,7 @@ module CtrlUnit (
 	parameter ADDI 				    = 7'b0010010; // 18
 	parameter ADDIU 			    = 7'b0010011; // 19 
 	parameter BEQ_BNE_STEP_ONE      = 7'b0010100; // 20
-	parameter BEQ_BNE_STEP_TWO      = 7'b0010101; // 21 
+	parameter BEQ_BNE_STEP_TWO      = 7'b0010101; // 21
 	parameter BLE_BGT_STEP_ONE      = 7'b0010110; // 22
 	parameter BLE_BGT_STEP_TWO      = 7'b0010111; // 23
 	parameter SW_SH_SB_STEP_ONE     = 7'b0011000; // 24
@@ -105,11 +105,13 @@ module CtrlUnit (
 	parameter DIV_BY_ZERO_STEP_ONE  = 7'b0110111; // 55
 	parameter DIV_BY_ZERO_STEP_TWO  = 7'b0111000; // 56
 	
-	parameter SRAM                  = 7'b0100000; // 
-	parameter DIVM_STEP_ONE         = 7'b1000000; // 
-	parameter DIVM_STEP_TWO         = 7'b1000001; // 
-	parameter DIVM_STEP_THREE       = 7'b1000010; // 
-	parameter DIVM_STEP_FOUR        = 7'b1000011; // 
+	parameter DIVM_STEP_ONE         = 7'b1000001; // 65
+	parameter DIVM_STEP_TWO         = 7'b1000010; // 66
+	parameter DIVM_STEP_TWO_WAIT    = 7'b1000011; // 67
+	parameter DIVM_STEP_THREE       = 7'b1000100; // 68
+	parameter DIVM_STEP_FOUR        = 7'b1000101; // 69
+	parameter DIVM_STEP_FOUR_WAIT   = 7'b1000110; // 70
+	parameter SRAM                  = 7'b1000111; // 71
 	
 	// parameters do opcode
 	
@@ -446,7 +448,7 @@ module CtrlUnit (
 									state = MFLO;
 								end
 								DIVM_FUNCT: begin
-									state = DIVM;
+									state = DIVM_STEP_ONE;
 								end
 							endcase
 						end
@@ -632,10 +634,6 @@ module CtrlUnit (
 				end
 
 				ADD_SUB_AND: begin
-					
-					if (overflow) begin
-						state = OVERFLOW_STEP_ONE
-					end
 
 					reg_write = 1'b1;
 					alu_src_a = 1'b0;
@@ -668,7 +666,11 @@ module CtrlUnit (
 					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
 
-					state = CLOSE_WRITE;
+					if (overflow && funct != AND_FUNCT) begin
+						state = OVERFLOW_STEP_ONE;
+					end else begin
+						state = CLOSE_WRITE;
+					end
 				end
 
 				SHIFT_SHAMT: begin
@@ -822,6 +824,7 @@ module CtrlUnit (
 				end
 				
 				SHIFT_REG: begin
+
 					shift_control = LOAD_SRC;
           			shift_src_control = 1'b0;
 					shift_amount_control = 2'b00;
@@ -1971,10 +1974,6 @@ module CtrlUnit (
 
 				DIV_STEP_TWO: begin
 					
-					if (div_0_exception) begin
-						state = DIV_BY_ZERO_STEP_ONE;
-					end
-					
 					div_start = 1'b0;
 					low_write = 1'b0;
 					high_write = 1'b0;
@@ -2005,24 +2004,27 @@ module CtrlUnit (
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
-					
-					if (div_end == 0) begin
-						state = DIV_STEP_TWO;
+
+					if (div_0_exception) begin
+						state = DIV_BY_ZERO_STEP_ONE;
 					end else begin
-						low_write = 1'b1;
-						high_write = 1'b1;
-						state = CLOSE_WRITE;
+						if (div_end == 0) begin
+							state = DIV_STEP_TWO;
+						end else begin
+							low_write = 1'b1;
+							high_write = 1'b1;
+							state = CLOSE_WRITE;
+						end
 					end
 
 				end
 
 				DIVM_STEP_ONE: begin
 
+					i_or_d = 2'b10;
 					alu_src_a = 1'b1;
 					alu_op = ULA_LOAD;
 					alu_out_write = 1'b1;
-					
-					i_or_d = 2'b00;
 					
 					div_src = 1'b0;
 					ir_write = 1'b0;
@@ -2035,8 +2037,8 @@ module CtrlUnit (
 					mult_start = 1'b0;
 					high_write = 1'b0;
 					alu_src_b = 2'b00;
-					pc_source = 3'b000;
 					pc_control = 1'b0; 
+					pc_source = 3'b000;
 					div_or_mult = 1'b0;
 					memory_write = 1'b0;
 					mem_to_reg = 3'b000;
@@ -2056,11 +2058,11 @@ module CtrlUnit (
 				DIVM_STEP_TWO: begin
 
 					i_or_d = 2'b01;
-					memory_write = 1'b0;
+					mem_data_write = 1'b0;
 
 					alu_src_a = 1'b0;
 					alu_op = ULA_LOAD;
-					mem_data_write = 1'b0;
+					memory_write = 1'b0;
 					
 					div_src = 1'b0;
 					ir_write = 1'b0;
@@ -2092,7 +2094,7 @@ module CtrlUnit (
 				
 				DIVM_STEP_THREE: begin
 
-					i_or_d = 2'b11;
+					i_or_d = 2'b01;
 					mem_data_write = 1'b1;
 
 					alu_src_a = 1'b0;
@@ -2132,7 +2134,43 @@ module CtrlUnit (
 					div_src = 1'b1;
 					div_start = 1'b1;
 
-					i_or_d = 2'b11;
+					i_or_d = 2'b10;
+					alu_src_a = 1'b0;
+					alu_op = ULA_LOAD;
+					mem_data_write = 1'b0;
+					
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					epc_write = 1'b0;
+					reg_write = 1'b0;
+					low_write = 1'b0;
+					mult_start = 1'b0;
+					high_write = 1'b0;
+					alu_src_b = 2'b00;
+					pc_control = 1'b0; 
+					pc_source = 3'b000;
+					div_or_mult = 1'b0;
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					load_size_control = 2'b00;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					exceptions_control = 2'b00;
+					
+					state = DIVM_STEP_FOUR_WAIT;
+				end
+				
+				DIVM_STEP_FOUR_WAIT: begin
+
+					div_src = 1'b1;
+					div_start = 1'b1;
+
+					i_or_d = 2'b10;
 					alu_src_a = 1'b0;
 					alu_op = ULA_LOAD;
 					mem_data_write = 1'b0;
@@ -2214,7 +2252,6 @@ module CtrlUnit (
 					pc_write = 1'b0;
 					reg_write = 1'b0;
 					a_b_write = 1'b0;
-					epc_write = 1'b0;
 					div_start = 1'b0;
 					mult_start = 1'b0;
 					pc_control = 1'b0; 
@@ -2231,7 +2268,7 @@ module CtrlUnit (
 					exceptions_control = 2'b00;
 					shift_amount_control = 2'b00;
 
-					state = OVERFLOW_STEP_TWO;
+					state = DIV_BY_ZERO_STEP_TWO;
 				end
 				
 				DIV_BY_ZERO_STEP_TWO: begin
@@ -2251,7 +2288,6 @@ module CtrlUnit (
 					pc_write = 1'b0;
 					reg_write = 1'b0;
 					a_b_write = 1'b0;
-					epc_write = 1'b0;
 					div_start = 1'b0;
 					mult_start = 1'b0;
 					pc_control = 1'b0; 
@@ -2268,46 +2304,8 @@ module CtrlUnit (
 					exceptions_control = 2'b00;
 					shift_amount_control = 2'b00;
 
-					state = DIV_BY_ZERO_STEP_THREE;
+					state = OVERFLOW_STEP_THREE;
 				end
-				
-				DIV_BY_ZERO_STEP_THREE: begin
-					
-					epc_write = 1'b0;
-
-					i_or_d = 2'b10;
-					alu_src_a = 1'b0;
-					alu_op = ULA_SUB;
-					alu_src_b = 2'b01;
-					exceptions_control = 2'b10;
-
-					memory_write = 1'b0;
-
-					div_src = 1'b0;
-					ir_write = 1'b0;
-					pc_write = 1'b0;
-					reg_write = 1'b0;
-					a_b_write = 1'b0;
-					epc_write = 1'b0;
-					div_start = 1'b0;
-					mult_start = 1'b0;
-					pc_control = 1'b0; 
-					pc_source = 3'b000;
-					div_or_mult = 1'b0;
-					mem_to_reg = 3'b000;
-					alu_out_write = 1'b0;
-					reg_dist_ctrl = 2'b00;
-					mem_data_write = 1'b0;
-					shift_control = 3'b000;
-					shift_src_control = 1'b0;
-					load_size_control = 2'b00;
-					store_size_control = 2'b00;
-					exceptions_control = 2'b00;
-					shift_amount_control = 2'b00;
-
-					state = OVERFLOW_STEP_FOUR;
-				end
-
 
 				LUI: begin
 					mem_to_reg = 3'b110;

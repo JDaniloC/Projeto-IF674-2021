@@ -24,7 +24,7 @@ Essas são as instruções que conseguimos fazer:
 - [x] mult rs, rt
 - [x] mfhi rd
 - [x] mflo rd
-- [ ] divm rs, rt
+- [x] divm rs, rt
 
 ### Instruções do tipo I
 
@@ -41,8 +41,8 @@ Essas são as instruções que conseguimos fazer:
 - [x] sb rt, offset(rs)
 - [x] sh rt, offset(rs)
 - [x] sw rt, offset(rs)
-- [ ] sram rt, offset(rs) 
 - [x] slti rt, rs, imediato
+- [ ] sram rt, offset(rs) 
 
 ### Instruções do tipo J
 

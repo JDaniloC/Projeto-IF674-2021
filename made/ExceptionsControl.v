@@ -8,11 +8,11 @@ module ExceptionsControl (
         always @(*) begin
             case (exceptions_control)
                 s0:
-                    exceptions_control <= 32'd253;
+                    exceptions_out <= 32'd253;
                 s1:
-                    exceptions_control <= 32'd254;
+                    exceptions_out <= 32'd254;
                 s2:
-                    exceptions_control <= 32'd255;
+                    exceptions_out <= 32'd255;
             endcase
         end
 endmodule

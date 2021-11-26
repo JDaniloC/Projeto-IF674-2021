@@ -15,7 +15,7 @@ module Cpu (
     
     wire pc_write;
     wire pc_control;
-    wire [1:0] pc_source;
+    wire [2:0] pc_source;
     
     wire alu_src_a;
     wire a_b_write;
@@ -279,7 +279,7 @@ module Cpu (
         .Clk(clock),
         .Reset(reset),
         .Load(epc_write),
-        .Entrada(alu_out_reg_out),
+        .Entrada(alu_out),
         
         .Saida(epc_out)
     );
@@ -332,7 +332,7 @@ module Cpu (
     Mux2Bits mux_div_src_a (
         .selector(div_src),
         .data_0(a_out),
-        .data_1(memory_data_out),
+        .data_1(memory_out),
 
         .data_output(div_src_a_out)
     );
@@ -340,7 +340,7 @@ module Cpu (
     Mux2Bits mux_div_src_b (
         .selector(div_src),
         .data_0(b_out),
-        .data_1(memory_out),
+        .data_1(memory_data_out),
 
         .data_output(div_src_b_out)
     );
@@ -523,6 +523,7 @@ module Cpu (
         .mem_data_write(mem_data_write),
         .load_size_control(load_control),
         .exceptions_control(exp_control),
+        .div_0_exception(div_0_exception),
         .shift_src_control(shift_src_control),
         .store_size_control(store_size_control),
         .shift_amount_control(shift_amount_control)
