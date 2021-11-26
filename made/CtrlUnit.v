@@ -2318,41 +2318,6 @@ module CtrlUnit (
 					
 					state = DIV_STEP_TWO;
 				end
-				
-				SRAM: begin
-
-					i_or_d = 2'b00;
-					div_src = 1'b0;
-					ir_write = 1'b0;
-					pc_write = 1'b0;
-					div_start = 1'b0;
-					a_b_write = 1'b0;
-					epc_write = 1'b0;
-					reg_write = 1'b0;
-					alu_src_a = 1'b0;
-					low_write = 1'b0;
-					mult_start = 1'b0;
-					high_write = 1'b0;
-					alu_op = ULA_LOAD;
-					alu_src_b = 2'b00;
-					pc_source = 3'b000;
-					pc_control = 1'b0; 
-					div_or_mult = 1'b0;
-					memory_write = 1'b0;
-					mem_to_reg = 3'b000;
-					alu_out_write = 1'b0;
-					reg_dist_ctrl = 2'b00;
-					mem_data_write = 1'b0;
-					shift_control = 3'b000;
-					shift_src_control = 1'b0;
-					load_size_control = 2'b00;
-					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
-					exceptions_control = 2'b00;
-					
-					
-					state = CLOSE_WRITE;
-				end
 
 				DIV_BY_ZERO_STEP_ONE: begin
 					
