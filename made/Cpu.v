@@ -38,8 +38,8 @@ module Cpu (
     wire [31:0] div_hi_out;
     wire [31:0] mult_hi_out;
 
-    wire high_write;
     wire low_write;
+    wire high_write;
     wire store_control;
     wire [1:0] load_control;
     
@@ -91,6 +91,7 @@ module Cpu (
     wire [31:0] div_src_b_out;
 
     wire [31:0] extend_immediate_out;
+    wire [31:0] extend_memory_out;
     wire [31:0] shift_left_16_out;
     wire [31:0] shift_left_4_out;
     wire [31:0] extend_ula_1_out;
@@ -291,15 +292,6 @@ module Cpu (
         
         .Saida(memory_data_out)
     );
-   
-    Registrador load_size_reg (
-        .Clk(clock),
-        .Reset(reset),
-        .Load(load_control),
-        .Entrada(memory_data_out),
-        
-        .Saida(load_size_out)
-    );
 
     // Blocos de controle
 
@@ -405,12 +397,13 @@ module Cpu (
         .data_output(shift_amount_out)
     );
 
-    Mux4Bits mux_pc_source (
+    PcSourceMux mux_pc_source (
         .selector(pc_source),
         .data_0(alu_out),
         .data_1(alu_out_reg_out),
         .data_2(concatenate_28_to_32_out),
         .data_3(epc_out),
+        .data_4(extend_memory_out),
         
         .data_output(pc_source_out)
     );
@@ -444,6 +437,11 @@ module Cpu (
     SignExtend1 extend_ula (
         .data_in(LT),
         .data_out_32(extend_ula_1_out)
+    );
+
+    SignExtend8 extend_memory (
+        .memory_data(memory_data_out),
+        .sign_out_32(extend_memory_out)
     );
 
     SignExtend16 extend_immediate (
@@ -483,6 +481,11 @@ module Cpu (
         concatenate_28_to_32_out
     );
 
+    ExceptionsControl exceptions(
+        .exceptions_control(exp_control),
+        .exceptions_out(exp_out)
+    );
+
     // Bloco central
 
     CtrlUnit cpu_ctrl (
@@ -491,13 +494,15 @@ module Cpu (
         .greater(GT),
         .equal(EQ),
         .i_or_d(i_or_d),
-        .op_code(OPCODE),
         .div_end(div_end),
+        .op_code(OPCODE),
         .div_src(div_src),
+        .overflow(overflow),
         .ir_write(ir_write),
         .pc_write(pc_write),
         .mult_end(mult_end),
         .alu_op(alu_control),
+        .epc_write(epc_write),
         .div_start(div_start),
         .a_b_write(a_b_write),
         .reg_write(reg_write),
@@ -517,6 +522,7 @@ module Cpu (
         .shift_control(shift_control),
         .mem_data_write(mem_data_write),
         .load_size_control(load_control),
+        .exceptions_control(exp_control),
         .shift_src_control(shift_src_control),
         .store_size_control(store_size_control),
         .shift_amount_control(shift_amount_control)
