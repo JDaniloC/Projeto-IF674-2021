@@ -1,8 +1,90 @@
+Infra-HW-CC
+Mural
+Atividades
+Pessoas
+Infra-HW-CC
+Ver as informações sobre a turma
+
+Meet
+Próximas atividades
+Data de entrega: terça-feira
+23:59 – Lista 2 - Questões
+Ver tudo
+
+Escreva um aviso para sua turma
+
+Aviso: "boa noite pessoal, parser atualizado…"
+Antonio Barros da Silva Netto
+Criado em: 21:5321:53
+boa noite pessoal, parser atualizado com sram e divm
+
+parser (2).html
+HTML
+
+
+Aviso: "Pessoal, Segue o link do meet da aula…"
+Adriano Augusto de Moraes Sarmento
+Criado em: 08:0408:04
+Pessoal,
+Segue o link do meet da aula de hoje: meet.google.com/umu-cgji-qnf
+
+
+Aviso: "A aula de processamento paralelo de…"
+Adriano Augusto de Moraes Sarmento
+Criado em: 23 de nov.23 de nov.
+A aula de processamento paralelo de hoje: https://drive.google.com/file/d/1M6EgE8aMDqXvybyBlPnyh3bEgA2gFkMk/view?usp=sharing
+
+
+Aviso: "Pessoal, Segue o link da aula de hoje:…"
+Adriano Augusto de Moraes Sarmento
+Criado em: 23 de nov.23 de nov.
+Pessoal,
+Segue o link da aula de hoje: meet.google.com/nur-qbaw-peb
+
+
+Aviso: "boa tarde pessoal, segue o link da…"
+Antonio Barros da Silva Netto
+Criado em: 22 de nov.22 de nov.
+boa tarde pessoal, segue o link da gravação da monitoria do dia 19/11: https://drive.google.com/file/d/1MyBiyeOIqcbS_3X_CBHV9iHIvPr_upkv/view?usp=sharing
+
+
+Aviso: "segue link para a monitoria de hoje:…"
+Antonio Barros da Silva Netto
+Criado em: 19 de nov.19 de nov.
+segue link para a monitoria de hoje: https://meet.google.com/zng-vxsa-dof
+
+Atividade: "Lista 2 - Questões"
+Antonio Barros da Silva Netto postou uma nova atividade: Lista 2 - Questões
+Criado em: 19 de nov.19 de nov.
+
+Aviso: "Pessoal Boa noite, pela a votação do…"
+Antonio Barros da Silva Netto
+Criado em: 18 de nov.18 de nov.
+Pessoal Boa noite, pela a votação do formulário a monitoria ficou para amanhã de 19h00 - 20h00, vejo vocês amanhã :)
+
+
+Aviso: "Boa noite pessoal, por contratempos não…"
+Antonio Barros da Silva Netto
+Criado em: 17 de nov.17 de nov.
+Boa noite pessoal, por contratempos não será possível dar para vocês a monitoria de pipeline/revisão do segundo assunto amanhã, porém é muito importante que a gente tenha esse momento com vocês. Vou deixar um formulário em anexo com algumas possibilidades de horário, marquem os quais vocês podem comparecer, vou deixar aberto a respostas até amanhã de 19:30 :)
+
+Google Forms: Sign-in
+https://forms.gle/mDZpZGhKubVGqmSZ6
+
+
+Aviso: "Boa noite pessoal, se vocês estiverem…"
+Antonio Barros da Silva Netto
+Criado em: 17 de nov.17 de nov.
+Boa noite pessoal, se vocês estiverem com problemas em compilar alguns componentes que foram dados. Substituam pelos que vou deixar abaixo e tentem compilar de novo :)
+
+[2021 rev] Componentes do Projeto.7z
+Arquivo compactado
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Parser_HW_2020.1</title>
+    <title>Parser_HW_2020.2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
         body {
@@ -95,7 +177,7 @@
 </head>
 <body>
 <div id="container">
-    <h1 class="all" id="name">PARSER Infra-HW CC versão 2020.1.1</h1>
+    <h1 class="all" id="name">PARSER Infra-HW CC versão 2020.2.1</h1>
     <textarea class="all textHolder" id="code" placeholder="CODE"></textarea>
     <button id="play" class="btn all">>></button>
     <h2 class="all" id="debug_name">DEBUG</h2>
@@ -163,19 +245,19 @@
     let digits = /\d/;
     let numbers = /^-?\d*$/;
     let carriageReturn = /^\r\n|\r|\n$/;
-    let instructions = /^add$|^and$|^div$|^mult$|^jr$|^mfhi$|^mflo$|^sll$|^sllv$|^slt$|^sra$|^srav$|^srl$|^sub$|^break$|^rte$|^push$|^pop$|^xchg$|^addi$|^addiu$|^beq$|^bne$|^ble$|^bgt$|^blm$|^lb$|^lh$|^lui$|^lw$|^sb$|^sh$|^slti$|^sw$|^j$|^jal$|^inc$|^dec$/i;
-    let instructionsR = /^add$|^and$|^div$|^mult$|^jr$|^mfhi$|^mflo$|^sll$|^sllv$|^slt$|^sra$|^srav$|^srl$|^sub$|^break$|^rte$|^push$|^pop$|^xchg$/i;
-    let instructionsR3registers = /^add$|^and$|^sllv$|^slt$|^srav$|^sub$/i;
+    let instructions = /^add$|^addm$|^and$|^div$|^divm$|^mult$|^jr$|^mfhi$|^mflo$|^sll$|^sllv$|^sllm$|^slt$|^sra$|^sram$|^srav$|^srl$|^sub$|^break$|^rte$|^push$|^pop$|^xchg$|^addi$|^addiu$|^beq$|^bne$|^ble$|^bgt$|^blm$|^lb$|^lh$|^lui$|^lw$|^sb$|^sh$|^slti$|^sw$|^j$|^jal$|^inc$|^dec$/i;
+    let instructionsR = /^add$|^addm$|^and$|^div$|^divm$|^mult$|^jr$|^mfhi$|^mflo$|^sll$|^sllv$|^slt$|^sra$|^srav$|^srl$|^sub$|^break$|^rte$|^push$|^pop$|^xchg$/i;
+    let instructionsR3registers = /^add$|^addm$|^and$|^sllv$|^slt$|^srav$|^sub$/i;
     let instructionsRshamt = /^sll$|^sra$|^srl$/i;
-    let instructionsR2registers = /^div$|^mult$|^xchg$/i;
+    let instructionsR2registers = /^div$|^divm$|^mult$|^xchg$/i;
     let instructionsRstoppers = /^break$|^rte$/i;
     let instructionsRhilo = /^mfhi$|^mflo$/i;
     let instructionsRstack = /^push$|^pop$/i;
     let instructionsRjump = /^jr$/i;
-    let instructionsI = /^addi$|^addiu$|^beq$|^bne$|^ble$|^bgt$|^blm$|^lb$|^lh$|^lui$|^lw$|^sb$|^sh$|^slti$|^sw$/i;
-    let instructionsIimmediate = /^addi$|^addiu$|^slti$/i;
+    let instructionsI = /^addi$|^addiu$|^beq$|^bne$|^ble$|^bgt$|^blm$|^sram$|^lb$|^lh$|^lui$|^lw$|^sb$|^sh$|^slti$|^sllm$|^sw$/i;
+    let instructionsIimmediate = /^addi$|^addiu$|^sram$|^slti$/i;
     let instructionsIbranch = /^beq$|^bne$|^ble$|^bgt$|^blm$/i;
-    let instructionsIloadstore = /^lb$|^lh$|^lw$|^sb$|^sh$|^sw$/i;
+    let instructionsIloadstore = /^lb$|^lh$|^lw$|^sllm$|^sb$|^sh$|^sw$/i;
     let instructionsIlui = /^lui$/i;
     let instructionsJ = /^j$|^jal$|^inc$|^dec$/i;
     let instructionsJnumm = /^inc$|^dec$/i;
@@ -184,6 +266,8 @@
     let codes = [
         {name:/^add$/i , code: "100000"},
         {name:/^and$/i , code: "100100"},
+	{name:/^divm$/i , code: "000101"},
+	    {name:/^addm$/i , code: "000101"},
         {name:/^div$/i , code: "011010"},
         {name:/^mult$/i , code: "011000"},
         {name:/^jr$/i , code: "001000"},
@@ -194,7 +278,9 @@
         {name:/^slt$/i , code: "101010"},
         {name:/^sra$/i , code: "000011"},
         {name:/^srav$/i , code: "000111"},
+	{name:/^sram$/i , code: "000001"},
         {name:/^srl$/i , code: "000010"},
+	    {name:/^sllm$/i , code: "000001"},
         {name:/^sub$/i , code: "100010"},
         {name:/^break$/i , code: "001101"},
         {name:/^rte$/i , code: "010011"},
@@ -1204,5 +1290,3 @@
 </script>
 </body>
 </html>
-parser.html
-Exibindo parser.html.

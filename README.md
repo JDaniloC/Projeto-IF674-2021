@@ -21,15 +21,15 @@ Essas são as instruções que conseguimos fazer:
 - [x] break 
 - [x] Rte 
 - [x] div rs, rt
-- [ ] mult rs, rt
-- [ ] mfhi rd
-- [ ] mflo rd
-- [ ] divm rs,rt
+- [x] mult rs, rt
+- [x] mfhi rd
+- [x] mflo rd
+- [x] divm rs, rt
 
 ### Instruções do tipo I
 
 - [x] addi rt, rs, imediato
-- [ ] addiu rt, rs, imediato
+- [x] addiu rt, rs, imediato
 - [x] beq rs,rt, offset
 - [x] bne rs, rt, offset 
 - [x] ble rs, rt, offset 
@@ -41,8 +41,8 @@ Essas são as instruções que conseguimos fazer:
 - [x] sb rt, offset(rs)
 - [x] sh rt, offset(rs)
 - [x] sw rt, offset(rs)
+- [x] slti rt, rs, imediato
 - [ ] sram rt, offset(rs) 
-- [ ] slti rt, rs, imediato
 
 ### Instruções do tipo J
 

@@ -28,7 +28,6 @@ module Div (
 			HI[31:0] = 32'd0;
 			LO[31:0] = 32'd0;
 			quotient = 65'b0;
-			div_0_exception = 1'd0;
 
 		end else begin
 
@@ -41,7 +40,6 @@ module Div (
 				div_end = 1'd0;
 				HI[31:0] = 32'd0;
 				LO[31:0] = 32'd0;
-				div_0_exception = 1'd0;
 			end else begin
 
 				if (subtrated[32] == 0) begin
