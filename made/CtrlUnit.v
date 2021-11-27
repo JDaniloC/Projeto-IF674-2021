@@ -1833,7 +1833,6 @@ module CtrlUnit (
 						SRAM_OPCODE: begin
 							state = SRAM_STEP_ONE;
 						end
-						end
 					endcase
 				end
 
