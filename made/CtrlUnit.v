@@ -116,6 +116,8 @@ module CtrlUnit (
 	parameter SRAM_STEP_ONE			= 7'b1000111; // 71
 	parameter SRAM_STEP_TWO			= 7'b1001000; // 72
 	parameter SRAM_STEP_THREE		= 7'b1001001; // 73
+	parameter MULT_WAIT        		= 7'b1001010; // 74
+	parameter DIV_WAIT        		= 7'b1001011; // 75
 	
 	// parameters do opcode
 	
@@ -2086,6 +2088,42 @@ module CtrlUnit (
 					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
 					
+					state = DIV_WAIT;
+				end
+
+				DIV_WAIT: begin
+					
+					div_start = 1'b1;
+					low_write = 1'b0;
+					high_write = 1'b0;
+
+					div_src = 1'b0;
+					div_or_mult = 1'b0;
+
+					i_or_d = 2'b00;
+					ir_write = 1'b0;
+					pc_write = 1'b0;
+					a_b_write = 1'b0;
+					epc_write = 1'b0;
+					reg_write = 1'b0;
+					alu_src_a = 1'b0;
+					alu_op = ULA_LOAD;
+					alu_src_b = 2'b00;
+					pc_source = 3'b000;
+					mult_start = 1'b0;
+					pc_control = 1'b0; 
+					memory_write = 1'b0;
+					mem_to_reg = 3'b000;
+					alu_out_write = 1'b0;
+					reg_dist_ctrl = 2'b00;
+					mem_data_write = 1'b0;
+					shift_control = 3'b000;
+					shift_src_control = 1'b0;
+					load_size_control = 2'b00;
+					store_size_control = 2'b00;
+					shift_amount_control = 2'b00;
+					exceptions_control = 2'b00;
+					
 					state = DIV_STEP_TWO;
 				end
 
@@ -2393,7 +2431,7 @@ module CtrlUnit (
 				LUI: begin
 					mem_to_reg = 3'b110;
 					reg_dist_ctrl = 2'b00;
-					reg_write = 1'b0;
+					reg_write = 1'b1;
 
 					div_src = 1'b0;
 					i_or_d = 2'b00;
@@ -2423,39 +2461,74 @@ module CtrlUnit (
 				end
 				
 				MULT_STEP_ONE: begin
-					
-					low_write = 1'b0;
-					mult_start = 1'b1;
-					high_write = 1'b0;
-					div_or_mult = 1'b1;
+                    
+                    low_write = 1'b0;
+                    mult_start = 1'b1;
+                    high_write = 1'b0;
+                    div_or_mult = 1'b1;
 
-					i_or_d = 2'b00;
-					div_src = 1'b0;
-					ir_write = 1'b0;
-					pc_write = 1'b0;
-					div_start = 1'b0;
-					a_b_write = 1'b0;
-					epc_write = 1'b0;
-					reg_write = 1'b0;
-					alu_src_a = 1'b0;
-					alu_op = ULA_LOAD;
-					alu_src_b = 2'b00;
-					pc_source = 3'b000;
-					pc_control = 1'b0; 
-					memory_write = 1'b0;
-					mem_to_reg = 3'b000;
-					alu_out_write = 1'b0;
-					reg_dist_ctrl = 2'b00;
-					mem_data_write = 1'b0;
-					shift_control = 3'b000;
-					shift_src_control = 1'b0;
-					load_size_control = 2'b00;
-					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
-					exceptions_control = 2'b00;
-					
-					state = MULT_STEP_TWO;
-				end
+                    i_or_d = 2'b00;
+                    div_src = 1'b0;
+                    ir_write = 1'b0;
+                    pc_write = 1'b0;
+                    div_start = 1'b0;
+                    a_b_write = 1'b0;
+                    epc_write = 1'b0;
+                    reg_write = 1'b0;
+                    alu_src_a = 1'b0;
+                    alu_op = ULA_LOAD;
+                    alu_src_b = 2'b00;
+                    pc_source = 3'b000;
+                    pc_control = 1'b0; 
+                    memory_write = 1'b0;
+                    mem_to_reg = 3'b000;
+                    alu_out_write = 1'b0;
+                    reg_dist_ctrl = 2'b00;
+                    mem_data_write = 1'b0;
+                    shift_control = 3'b000;
+                    shift_src_control = 1'b0;
+                    load_size_control = 2'b00;
+                    store_size_control = 2'b00;
+                    shift_amount_control = 2'b00;
+                    exceptions_control = 2'b00;
+                    
+                    state = MULT_WAIT;
+                end
+
+                MULT_WAIT: begin
+                    
+                    low_write = 1'b0;
+                    mult_start = 1'b1;
+                    high_write = 1'b0;
+                    div_or_mult = 1'b1;
+
+                    i_or_d = 2'b00;
+                    div_src = 1'b0;
+                    ir_write = 1'b0;
+                    pc_write = 1'b0;
+                    div_start = 1'b0;
+                    a_b_write = 1'b0;
+                    epc_write = 1'b0;
+                    reg_write = 1'b0;
+                    alu_src_a = 1'b0;
+                    alu_op = ULA_LOAD;
+                    alu_src_b = 2'b00;
+                    pc_source = 3'b000;
+                    pc_control = 1'b0; 
+                    memory_write = 1'b0;
+                    mem_to_reg = 3'b000;
+                    alu_out_write = 1'b0;
+                    reg_dist_ctrl = 2'b00;
+                    mem_data_write = 1'b0;
+                    shift_control = 3'b000;
+                    shift_src_control = 1'b0;
+                    load_size_control = 2'b00;
+                    store_size_control = 2'b00;
+                    shift_amount_control = 2'b00;
+                    exceptions_control = 2'b00;
+                    
+                    state = MULT_STEP_TWO;
+                end
 
 				MULT_STEP_TWO: begin
 					
