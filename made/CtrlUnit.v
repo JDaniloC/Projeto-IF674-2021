@@ -2347,7 +2347,6 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					exceptions_control = 2'b00;
 					shift_amount_control = 2'b00;
 
 					state = DIV_BY_ZERO_STEP_TWO; // Can be replaced to OVERFLOW_STEP_TWO?
@@ -2383,7 +2382,6 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					exceptions_control = 2'b00;
 					shift_amount_control = 2'b00;
 
 					// It's going to overflow steps because the unique difference
