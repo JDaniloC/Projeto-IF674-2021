@@ -1,0 +1,189 @@
+/home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux8Bits.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux8Bits.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Mux8Bits
+
+Top level modules:
+	Mux8Bits
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Instr_Reg.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Instr_Reg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity Instr_Reg
+-- Compiling architecture behavioral_arch of Instr_Reg
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/PcSourceMux.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/PcSourceMux.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module PcSourceMux
+
+Top level modules:
+	PcSourceMux
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SSControl.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SSControl.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module SSControl
+
+Top level modules:
+	SSControl
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/ula32.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/ula32.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity Ula32
+-- Compiling architecture behavioral of Ula32
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Concatenate28to32.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Concatenate28to32.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Concatenate28to32
+
+Top level modules:
+	Concatenate28to32
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SignExtend16.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SignExtend16.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module SignExtend16
+
+Top level modules:
+	SignExtend16
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Banco_reg.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Banco_reg.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity Banco_reg
+-- Compiling architecture behavioral_arch of Banco_reg
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/RegDesloc.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/RegDesloc.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity RegDesloc
+-- Compiling architecture behavioral_arch of RegDesloc
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SignExtend8.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SignExtend8.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module SignExtend8
+
+Top level modules:
+	SignExtend8
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ShiftLeft26.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ShiftLeft26.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ShiftLeft26
+
+Top level modules:
+	ShiftLeft26
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Memoria.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Memoria.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Compiling package ram_constants
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package LPM_COMPONENTS
+-- Loading package ram_constants
+-- Compiling entity Memoria
+-- Compiling architecture behavioral_arch of Memoria
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux4BitsOf4Bits.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux4BitsOf4Bits.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Mux4BitsOf4Bits
+
+Top level modules:
+	Mux4BitsOf4Bits
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/LoadSizeControl.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/LoadSizeControl.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module LoadSizeControl
+
+Top level modules:
+	LoadSizeControl
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ShiftLeft4.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ShiftLeft4.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ShiftLeft4
+
+Top level modules:
+	ShiftLeft4
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux2Bits.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux2Bits.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Mux2Bits
+
+Top level modules:
+	Mux2Bits
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Registrador.vhd {1 {vcom -work work -2002 -explicit -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/base/Registrador.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity Registrador
+-- Compiling architecture behavioral_arch of Registrador
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ShiftLeft16.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ShiftLeft16.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ShiftLeft16
+
+Top level modules:
+	ShiftLeft16
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux4Bits.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mux4Bits.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Mux4Bits
+
+Top level modules:
+	Mux4Bits
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Cpu.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Cpu.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Cpu
+
+Top level modules:
+	Cpu
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SignExtend1.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/SignExtend1.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module SignExtend1
+
+Top level modules:
+	SignExtend1
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mult.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Mult.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Mult
+
+Top level modules:
+	Mult
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Concatenate26to28.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Concatenate26to28.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Concatenate26to28
+
+Top level modules:
+	Concatenate26to28
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Div.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/Div.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module Div
+
+Top level modules:
+	Div
+
+} {} {}} /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ExceptionsControl.v {1 {vlog -work work -stats=none /home/caio/intelFPGA/ProjetoHardware/Projeto-CPU/made/ExceptionsControl.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module ExceptionsControl
+
+Top level modules:
+	ExceptionsControl
+
+} {} {}}

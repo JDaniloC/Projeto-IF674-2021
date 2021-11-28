@@ -101,7 +101,7 @@ Essas são as instruções que conseguimos fazer:
 - [x] sh rt, offset(rs)
 - [x] sw rt, offset(rs)
 - [x] slti rt, rs, imediato
-- [ ] sram rt, offset(rs) 
+- [x] sram rt, offset(rs) 
 
 ### Instruções do tipo J
 
@@ -109,6 +109,6 @@ Essas são as instruções que conseguimos fazer:
 - [x] jal offset
 
 ### Exceção
-- [ ] Overflow
-- [ ] div by 0
-- [ ] opcode inexistente
+- [x] Overflow
+- [x] div by 0
+- [x] opcode inexistente
