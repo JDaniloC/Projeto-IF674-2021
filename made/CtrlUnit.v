@@ -47,77 +47,73 @@ module CtrlUnit (
 	);
 
   // parameters of states
-	parameter CLOSE_WRITE 	   	    = 7'b1111111; // 128
-	parameter FETCH_STEP_ONE   	    = 7'b0000001; // 1
-	parameter FETCH_STEP_TWO   	    = 7'b0000010; // 2 
-	parameter FETCH_STEP_THREE 	    = 7'b0000011; // 3 
-	parameter DECODE_STEP_ONE  	    = 7'b0000100; // 4
-	parameter DECODE_STEP_TWO  	    = 7'b0000101; // 5
-  	parameter ADD 			        = 7'b0000110; // 6 
-	parameter SUB 			        = 7'b0000111; // 7
-	parameter AND 			        = 7'b0001000; // 8
-	parameter ADD_SUB_AND 	   	    = 7'b0001001; // 9
-	parameter SHIFT_SHAMT		    = 7'b0001010; // 10
-	parameter SLL_SLLV			    = 7'b0001011; // 11
-	parameter SRA_SRAV				= 7'b0001100; // 12
-	parameter SRL				    = 7'b0001101; // 13
-	parameter SHIFT_REG				= 7'b0001110; // 14
-	parameter SLL_SRA_SRL_SLLV_SRAV = 7'b0001111; // 15 
-	parameter SLT 				    = 7'b0010000; // 16
-	parameter ADDI_ADDIU    	    = 7'b0010001; // 17 
-	parameter ADDI 				    = 7'b0010010; // 18
-	parameter ADDIU 			    = 7'b0010011; // 19 
-	parameter BEQ_BNE_STEP_ONE      = 7'b0010100; // 20
-	parameter BEQ_BNE_STEP_TWO      = 7'b0010101; // 21
-	parameter BLE_BGT_STEP_ONE      = 7'b0010110; // 22
-	parameter BLE_BGT_STEP_TWO      = 7'b0010111; // 23
-	parameter SW_SH_SB_STEP_ONE     = 7'b0011000; // 24
-	parameter SW_SH_SB_STEP_TWO     = 7'b0011001; // 25
-	parameter SW_SH_SB_STEP_THREE   = 7'b0011010; // 26
-	parameter SW  					= 7'b0011011; // 27
-	parameter SH 					= 7'b0011100; // 28
-	parameter SB                    = 7'b0011101; // 29
-	parameter BREAK                 = 7'b0011110; // 30
-	parameter JR                 	= 7'b0011111; // 31
-	parameter RTE                 	= 7'b0100000; // 32
-	parameter JAL_STEP_ONE          = 7'b0100001; // 33
-	parameter JAL_STEP_TWO          = 7'b0100010; // 34
-	parameter JUMP                  = 7'b0100011; // 35
-	parameter LW_LH_LB_STEP_ONE 	= 7'b0100100; // 36
-	parameter LW_LH_LB_STEP_TWO    	= 7'b0100101; // 37 
-	parameter LW_LH_LB_STEP_THREE 	= 7'b0100110; // 38
-  	parameter LW_LH_LB_STEP_FOUR    = 7'b0100111; // 39
-	parameter LW 					= 7'b0101000; // 40
-	parameter LH  					= 7'b0101001; // 41
-	parameter LB 					= 7'b0101010; // 42
-	parameter DIV_STEP_ONE 			= 7'b0101011; // 43
-	parameter DIV_STEP_TWO 			= 7'b0101100; // 44
-	parameter LUI 					= 7'b0101101; // 45 
-	parameter MULT_STEP_ONE 		= 7'b0101110; // 46
-	parameter MULT_STEP_TWO 		= 7'b0101111; // 47 
-	parameter MFLO 		            = 7'b0110000; // 48
-	parameter MFHI 	               	= 7'b0110001; // 49
-	parameter SLTI 	                = 7'b0110010; // 50
-	parameter OVERFLOW_STEP_ONE     = 7'b0110011; // 51
-	parameter OVERFLOW_STEP_TWO     = 7'b0110100; // 52
-	parameter OVERFLOW_STEP_THREE   = 7'b0110101; // 53
-	parameter OVERFLOW_STEP_FOUR    = 7'b0110110; // 54
-	parameter DIV_BY_ZERO_STEP_ONE  = 7'b0110111; // 55
-	parameter DIV_BY_ZERO_STEP_TWO  = 7'b0111000; // 56
-	parameter OPCODE_EXP_STEP_ONE  	= 7'b0111001; // 57
-	parameter OPCODE_EXP_STEP_TWO  	= 7'b0111010; // 58
-	
-	parameter DIVM_STEP_ONE         = 7'b1000001; // 65
-	parameter DIVM_STEP_TWO         = 7'b1000010; // 66
-	parameter DIVM_STEP_TWO_WAIT    = 7'b1000011; // 67
-	parameter DIVM_STEP_THREE       = 7'b1000100; // 68
-	parameter DIVM_STEP_FOUR        = 7'b1000101; // 69
-	parameter DIVM_STEP_FOUR_WAIT   = 7'b1000110; // 70
-	parameter SRAM_STEP_ONE			= 7'b1000111; // 71
-	parameter SRAM_STEP_TWO			= 7'b1001000; // 72
-	parameter SRAM_STEP_THREE		= 7'b1001001; // 73
-	parameter MULT_WAIT        		= 7'b1001010; // 74
-	parameter DIV_WAIT        		= 7'b1001011; // 75
+	parameter CLOSE_WRITE 	   	    	= 7'b1111111; // 128
+	parameter FETCH_STEP_ONE   	    	= 7'b0000001; // 1
+	parameter FETCH_STEP_TWO   	    	= 7'b0000010; // 2 
+	parameter FETCH_STEP_THREE 	    	= 7'b0000011; // 3 
+	parameter DECODE_STEP_ONE  	    	= 7'b0000100; // 4
+	parameter DECODE_STEP_TWO  	    	= 7'b0000101; // 5
+  	parameter ADD 			        	= 7'b0000110; // 6 
+	parameter SUB 			        	= 7'b0000111; // 7
+	parameter AND 			        	= 7'b0001000; // 8
+	parameter ADD_SUB_AND 	   	    	= 7'b0001001; // 9
+	parameter SHIFT_SHAMT		    	= 7'b0001010; // 10
+	parameter SLL_SLLV			    	= 7'b0001011; // 11
+	parameter SRA_SRAV					= 7'b0001100; // 12
+	parameter SRL				    	= 7'b0001101; // 13
+	parameter SHIFT_REG					= 7'b0001110; // 14
+	parameter SLL_SRA_SRL_SLLV_SRAV 	= 7'b0001111; // 15 
+	parameter SLT 				    	= 7'b0010000; // 16
+	parameter ADDI_ADDIU    	    	= 7'b0010001; // 17 
+	parameter ADDI 				    	= 7'b0010010; // 18
+	parameter ADDIU 			    	= 7'b0010011; // 19 
+	parameter BEQ_BNE_BLE_BGT_STEP_ONE  = 7'b0010100; // 20
+	parameter BEQ_BNE_BLE_BGT_STEP_TWO	= 7'b0010101; // 21
+	parameter MFLO 		            	= 7'b0010110; // 22
+	parameter MFHI 	               		= 7'b0010111; // 23
+	parameter SW_SH_SB_STEP_ONE     	= 7'b0011000; // 24
+	parameter SW_SH_SB_STEP_TWO     	= 7'b0011001; // 25
+	parameter SW_SH_SB_STEP_THREE   	= 7'b0011010; // 26
+	parameter SW  						= 7'b0011011; // 27
+	parameter SH 						= 7'b0011100; // 28
+	parameter SB                    	= 7'b0011101; // 29
+	parameter BREAK                 	= 7'b0011110; // 30
+	parameter JR                 		= 7'b0011111; // 31
+	parameter RTE                 		= 7'b0100000; // 32
+	parameter JAL_STEP_ONE          	= 7'b0100001; // 33
+	parameter JAL_STEP_TWO          	= 7'b0100010; // 34
+	parameter JUMP                  	= 7'b0100011; // 35
+	parameter LW_LH_LB_STEP_ONE 		= 7'b0100100; // 36
+	parameter LW_LH_LB_STEP_TWO    		= 7'b0100101; // 37 
+	parameter LW_LH_LB_STEP_THREE 		= 7'b0100110; // 38
+  	parameter LW_LH_LB_STEP_FOUR    	= 7'b0100111; // 39
+	parameter LW 						= 7'b0101000; // 40
+	parameter LH  						= 7'b0101001; // 41
+	parameter LB 						= 7'b0101010; // 42
+	parameter DIV_STEP_ONE 				= 7'b0101011; // 43
+	parameter DIV_STEP_TWO 				= 7'b0101100; // 44
+	parameter DIV_WAIT        			= 7'b0101101; // 45
+	parameter MULT_STEP_ONE 			= 7'b0101110; // 46
+	parameter MULT_STEP_TWO 			= 7'b0101111; // 47 
+	parameter MULT_WAIT        			= 7'b0110000; // 48
+	parameter LUI 						= 7'b0110001; // 49
+	parameter SLTI 	                	= 7'b0110010; // 50
+	parameter OVERFLOW_STEP_ONE     	= 7'b0110011; // 51
+	parameter OVERFLOW_STEP_TWO     	= 7'b0110100; // 52
+	parameter OVERFLOW_STEP_THREE   	= 7'b0110101; // 53
+	parameter OVERFLOW_STEP_FOUR    	= 7'b0110110; // 54
+	parameter DIV_BY_ZERO_STEP_ONE  	= 7'b0110111; // 55
+	parameter DIV_BY_ZERO_STEP_TWO  	= 7'b0111000; // 56
+	parameter OPCODE_EXP_STEP_ONE  		= 7'b0111001; // 57
+	parameter OPCODE_EXP_STEP_TWO  		= 7'b0111010; // 58
+	parameter DIVM_STEP_ONE         	= 7'b0111011; // 59
+	parameter DIVM_STEP_TWO         	= 7'b0111100; // 60
+	parameter DIVM_STEP_THREE       	= 7'b0111101; // 61
+	parameter DIVM_STEP_FOUR        	= 7'b0111110; // 62
+	parameter DIVM_STEP_FOUR_WAIT   	= 7'b0111111; // 63
+	parameter SRAM_STEP_ONE				= 7'b1000000; // 64
+	parameter SRAM_STEP_TWO				= 7'b1000001; // 65
+	parameter SRAM_STEP_THREE			= 7'b1000010; // 66
 	
 	// parameters do opcode
 	
@@ -466,19 +462,19 @@ module CtrlUnit (
 						end
 
 						BEQ_OPCODE: begin 
-							state = BEQ_BNE_STEP_ONE; 
+							state = BEQ_BNE_BLE_BGT_STEP_ONE; 
 						end
 
 						BNE_OPCODE: begin
-							state = BEQ_BNE_STEP_ONE; 
+							state = BEQ_BNE_BLE_BGT_STEP_ONE; 
 						end
 
 						BGT_OPCODE: begin
-							state = BLE_BGT_STEP_ONE; 
+							state = BEQ_BNE_BLE_BGT_STEP_ONE; 
 						end
 
 						BLE_OPCODE: begin
-							state = BLE_BGT_STEP_ONE;
+							state = BEQ_BNE_BLE_BGT_STEP_ONE;
 						end
 
 						SW_OPCODE: begin
@@ -513,10 +509,6 @@ module CtrlUnit (
 						
 						LH_OPCODE: begin
 							state =  LW_LH_LB_STEP_ONE; 
-						end
-
-						LUI_OPCODE: begin
-							state = LUI;
 						end
 
 						SLTI_OPCODE: begin
@@ -1062,14 +1054,12 @@ module CtrlUnit (
 					state = CLOSE_WRITE;
 				end
 
-				BEQ_BNE_STEP_ONE: begin
+				BEQ_BNE_BLE_BGT_STEP_ONE: begin
 
 					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
 					alu_src_b = 2'b00;
-					alu_op = ULA_EG_GT_LT;
 					pc_source = 3'b001;
+					alu_op = ULA_EG_GT_LT;
 
 					div_src = 1'b0;
 					i_or_d = 2'b00;
@@ -1077,8 +1067,10 @@ module CtrlUnit (
 					pc_write = 1'b0;
 					a_b_write = 1'b0;
 					epc_write = 1'b0;
+					low_write = 1'b0;
 					reg_write = 1'b0;
 					div_start = 1'b0;
+					high_write = 1'b0;
 					mult_start = 1'b0;
 					pc_control = 1'b0; 
 					div_or_mult = 1'b0;
@@ -1091,20 +1083,18 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
-					state = BEQ_BNE_STEP_TWO;
+					state = BEQ_BNE_BLE_BGT_STEP_TWO;
 				end
 
-				BEQ_BNE_STEP_TWO: begin
+				BEQ_BNE_BLE_BGT_STEP_TWO: begin
 
 					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
 					alu_src_b = 2'b00;
-					alu_op = ULA_EG_GT_LT;
 					pc_source = 3'b001;
+					alu_op = ULA_EG_GT_LT;
 
 					div_src = 1'b0;
 					i_or_d = 2'b00;
@@ -1114,6 +1104,8 @@ module CtrlUnit (
 					epc_write = 1'b0;
 					reg_write = 1'b0;
 					div_start = 1'b0;
+					low_write = 1'b0;
+					high_write = 1'b0;
 					pc_control = 1'b0; 
 					mult_start = 1'b0;
 					div_or_mult = 1'b0;
@@ -1126,8 +1118,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
 					state = CLOSE_WRITE;
 
@@ -1148,80 +1140,6 @@ module CtrlUnit (
 								pc_write = 1'b0;
 							end
 						end
-					endcase
-				end
-
-				BLE_BGT_STEP_ONE: begin
-
-					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
-					alu_src_b = 2'b00;
-					alu_op = ULA_EG_GT_LT;
-					pc_source = 3'b001;
-					i_or_d = 2'b01;
-					memory_write = 1'b0;
-
-					div_src = 1'b0;
-					ir_write = 1'b0;
-					pc_write = 1'b0;
-					a_b_write = 1'b0;
-					epc_write = 1'b0;
-					reg_write = 1'b0;
-					div_start = 1'b0;
-					pc_control = 1'b0; 
-					mult_start = 1'b0;
-					div_or_mult = 1'b0;
-					mem_to_reg = 3'b000;
-					alu_out_write = 1'b0;
-					reg_dist_ctrl = 2'b00;
-					mem_data_write = 1'b0;
-					shift_control = 3'b000;
-					shift_src_control = 1'b0;
-					load_size_control = 2'b00;
-					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
-					exceptions_control = 2'b00;
-
-					state = BLE_BGT_STEP_TWO;
-				end
-
-				BLE_BGT_STEP_TWO: begin
-
-			
-					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
-					alu_src_b = 2'b00;
-					alu_op = ULA_EG_GT_LT;
-					pc_source = 3'b001;
-					i_or_d = 2'b01;
-					memory_write = 1'b0;
-
-					div_src = 1'b0;
-					ir_write = 1'b0;
-					pc_write = 1'b0;
-					div_start = 1'b0;
-					a_b_write = 1'b0;
-					epc_write = 1'b0;
-					reg_write = 1'b0;
-					mult_start = 1'b0;
-					pc_control = 1'b0; 
-					div_or_mult = 1'b0;
-					mem_to_reg = 3'b000;
-					alu_out_write = 1'b0;
-					reg_dist_ctrl = 2'b00;
-					mem_data_write = 1'b0;
-					shift_control = 3'b000;
-					shift_src_control = 1'b0;
-					load_size_control = 2'b00;
-					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
-					exceptions_control = 2'b00;
-
-					state = CLOSE_WRITE;
-
-					case(op_code)
 
 						BGT_OPCODE: begin
 							if(greater == 1'b1) begin
@@ -1243,13 +1161,12 @@ module CtrlUnit (
 
 				SW_SH_SB_STEP_ONE: begin
 
-					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
-					alu_src_b = 2'b10;
-					alu_op = ULA_ADD;
-					alu_out_write = 1'b1;
 					i_or_d = 2'b01;
+					alu_op = ULA_ADD;
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
+					alu_out_write = 1'b1;
+
 					memory_write = 1'b0;
 
 					div_src = 1'b0;
@@ -1259,6 +1176,8 @@ module CtrlUnit (
 					epc_write = 1'b0;
 					reg_write = 1'b0;
 					div_start = 1'b0;
+					low_write = 1'b0;
+					high_write = 1'b0;
 					mult_start = 1'b0;
 					pc_control = 1'b0; 
 					div_or_mult = 1'b0;
@@ -1270,8 +1189,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
 					state = SW_SH_SB_STEP_TWO;
 				end
@@ -1279,14 +1198,12 @@ module CtrlUnit (
 				
 				SW_SH_SB_STEP_TWO: begin
 
+					i_or_d = 2'b01;
 					alu_out_write = 1'b0;
 
-					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
-					alu_src_b = 2'b10;
 					alu_op = ULA_ADD;
-					i_or_d = 2'b01;
+					alu_src_a = 1'b1;
+					alu_src_b = 2'b10;
 					memory_write = 1'b0;
 
 					div_src = 1'b0;
@@ -1296,6 +1213,8 @@ module CtrlUnit (
 					a_b_write = 1'b0;
 					epc_write = 1'b0;
 					reg_write = 1'b0;
+					low_write = 1'b0;
+					high_write = 1'b0;
 					pc_control = 1'b0; 
 					mult_start = 1'b0;
 					pc_source = 3'b000;
@@ -1307,8 +1226,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
 					state = SW_SH_SB_STEP_THREE;
 				end
@@ -1319,8 +1238,6 @@ module CtrlUnit (
 
 					alu_out_write = 1'b0;
 					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
 					alu_src_b = 2'b10;
 					alu_op = ULA_ADD;
 					i_or_d = 2'b01; 
@@ -1332,6 +1249,8 @@ module CtrlUnit (
 					epc_write = 1'b0;
 					reg_write = 1'b0;
 					div_start = 1'b0;
+					low_write = 1'b0;
+					high_write = 1'b0;
 					mult_start = 1'b0;
 					pc_control = 1'b0; 
 					pc_source = 3'b000;
@@ -1343,8 +1262,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
                     case (op_code)
                         SW_OPCODE: begin
@@ -1472,13 +1391,11 @@ module CtrlUnit (
 				BREAK: begin
 					
 					pc_write = 1'b1;
-					alu_src_a = 1'b0;
-					low_write = 1'b0;
-					high_write = 1'b0;
-					alu_src_b = 2'b01;
 					alu_op = ULA_SUB;
-
+					alu_src_a = 1'b0;
+					alu_src_b = 2'b01;
 					pc_source = 3'b000;
+
 					div_src = 1'b0;
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
@@ -1486,6 +1403,8 @@ module CtrlUnit (
 					epc_write = 1'b0;
 					reg_write = 1'b0;
 					div_start = 1'b0;
+					low_write = 1'b0;
+					high_write = 1'b0;
 					mult_start = 1'b0;
 					pc_control = 1'b0; 
 					div_or_mult = 1'b0;
@@ -1498,8 +1417,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
 					state = CLOSE_WRITE;
 				end
@@ -1508,11 +1427,10 @@ module CtrlUnit (
 					
 					pc_write = 1'b1;
 					alu_src_a = 1'b1;
-					low_write = 1'b0;
-					high_write = 1'b0;
 					alu_op = ULA_LOAD;
 					
 					pc_source = 3'b000;
+					
 					div_src = 1'b0;
 					i_or_d = 2'b00;
 					ir_write = 1'b0;
@@ -1520,6 +1438,8 @@ module CtrlUnit (
 					a_b_write = 1'b0;
 					epc_write = 1'b0;
 					reg_write = 1'b0;
+					low_write = 1'b0;
+					high_write = 1'b0;
 					mult_start = 1'b0;
 					alu_src_b = 2'b00;
 					pc_control = 1'b0; 
@@ -1533,8 +1453,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
 					state = CLOSE_WRITE;
 				end
@@ -1567,8 +1487,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
 					state = CLOSE_WRITE;
 				end
@@ -1576,8 +1496,6 @@ module CtrlUnit (
 				JAL_STEP_ONE: begin
 					
 					alu_src_a = 1'b0;
-					low_write = 1'b0;
-					high_write = 1'b0;
 					alu_op = ULA_LOAD;
 					alu_out_write = 1'b1;
 
@@ -1589,10 +1507,12 @@ module CtrlUnit (
 					a_b_write = 1'b0;
 					epc_write = 1'b0;
 					reg_write = 1'b0;
+					low_write = 1'b0;
+					high_write = 1'b0;
 					mult_start = 1'b0;
 					alu_src_b = 2'b00;
-					pc_source = 3'b000;
 					pc_control = 1'b0; 
+					pc_source = 3'b000;
 					div_or_mult = 1'b0;
 					memory_write = 1'b0;
 					mem_to_reg = 3'b000;
@@ -1602,8 +1522,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
 					state = JAL_STEP_TWO;
 				end
@@ -1627,9 +1547,9 @@ module CtrlUnit (
 					mult_start = 1'b0;
 					alu_op = ULA_LOAD;
 					alu_src_b = 2'b00;
-					pc_source = 3'b000;
 					pc_control = 1'b0; 
 					div_or_mult = 1'b0;
+					pc_source = 3'b000;
 					memory_write = 1'b0;
 					alu_out_write = 1'b0;
 					mem_data_write = 1'b0;
@@ -1637,8 +1557,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
 					state = JUMP;
 				end
@@ -1671,8 +1591,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
 					state = CLOSE_WRITE;
 				end
@@ -1680,9 +1600,10 @@ module CtrlUnit (
 				LW_LH_LB_STEP_ONE: begin
 					
 					alu_out_write = 1'b1;
-					alu_src_a = 1'b1;
 					alu_src_b = 2'b10;
+					alu_src_a = 1'b1;
 					alu_op = ULA_ADD;
+
 					i_or_d = 2'b00;
 					memory_write = 1'b0;
 
@@ -1706,20 +1627,21 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
 					state = LW_LH_LB_STEP_TWO;
 				end
 				
 				LW_LH_LB_STEP_TWO: begin
 
+					i_or_d = 2'b01;
+					alu_op = ULA_ADD;
 					alu_src_a = 1'b1;
 					alu_src_b = 2'b10;
-					alu_op = ULA_ADD;
-					i_or_d = 2'b01;
-					memory_write = 1'b0;
 					alu_out_write = 1'b0;
+					
+					memory_write = 1'b0;
 
 					div_src = 1'b0;
 					ir_write = 1'b0;
@@ -1750,12 +1672,10 @@ module CtrlUnit (
 
 				LW_LH_LB_STEP_THREE: begin
 					
-					// This clock just exists to wait the memory finish the read
-					alu_out_write = 1'b1; // Is this really necessary?
-
+					alu_out_write = 1'b0;
 					memory_write = 1'b0;
-					alu_op = ULA_ADD;
 					alu_src_b = 2'b10;
+					alu_op = ULA_ADD;
 					alu_src_a = 1'b1;
 					i_or_d = 2'b01;
 
@@ -1789,10 +1709,10 @@ module CtrlUnit (
 
 					mem_data_write = 1'b1;
 
+					i_or_d = 2'b01;
+					alu_op = ULA_ADD;
 					alu_src_a = 1'b1;
 					alu_src_b = 2'b10;
-					alu_op = ULA_ADD;
-					i_or_d = 2'b01;
 
 					div_src = 1'b0;
 					ir_write = 1'b0;
@@ -1815,8 +1735,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
 					case (op_code)
 
@@ -1868,8 +1788,8 @@ module CtrlUnit (
 					shift_control = 3'b000;
 					shift_src_control = 1'b0;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
                     state = CLOSE_WRITE;
 					
@@ -1905,8 +1825,8 @@ module CtrlUnit (
 					shift_control = 3'b000;
 					shift_src_control = 1'b0;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
                     state = CLOSE_WRITE;
 					
@@ -1942,8 +1862,8 @@ module CtrlUnit (
 					shift_control = 3'b000;
 					shift_src_control = 1'b0;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 
                     state = CLOSE_WRITE;
 					
@@ -2387,7 +2307,7 @@ module CtrlUnit (
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
 
-					state = DIV_BY_ZERO_STEP_TWO; // Can be replaced to OVERFLOW_STEP_TWO?
+					state = DIV_BY_ZERO_STEP_TWO; 
 				end
 				
 				DIV_BY_ZERO_STEP_TWO: begin
@@ -2422,9 +2342,6 @@ module CtrlUnit (
 					store_size_control = 2'b00;
 					shift_amount_control = 2'b00;
 
-					// It's going to overflow steps because the unique difference
-					// between the two states is the overflow exception value (254-255)
-					// so insure the memory is reading the correct value.
 					state = OVERFLOW_STEP_THREE;
 				end
 
@@ -2643,42 +2560,6 @@ module CtrlUnit (
 					
 					state = CLOSE_WRITE;
 				end
-
-				LUI: begin
-
-					mem_to_reg = 3'b110;
-					reg_dist_ctrl = 2'b00;
-					reg_write = 1'b1;
-
-					i_or_d = 2'b00;
-					div_src = 1'b0;
-					ir_write = 1'b0;
-					pc_write = 1'b0;
-					div_start = 1'b0;
-					a_b_write = 1'b0;
-					epc_write = 1'b0;
-					alu_src_a = 1'b0;
-					low_write = 1'b0;
-					mult_start = 1'b0;
-					high_write = 1'b0;
-					alu_op = ULA_LOAD;
-					alu_src_b = 2'b00;
-					pc_source = 3'b000;
-					pc_control = 1'b0; 
-					div_or_mult = 1'b0;
-					memory_write = 1'b0;
-					alu_out_write = 1'b0;
-					mem_data_write = 1'b0;
-					shift_control = 3'b000;
-					shift_src_control = 1'b0;
-					load_size_control = 2'b00;
-					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
-					exceptions_control = 2'b00;
-					
-					state = CLOSE_WRITE;
-
-				end
 				
 				SLTI: begin
 
@@ -2717,10 +2598,6 @@ module CtrlUnit (
 
 				OVERFLOW_STEP_ONE: begin
 					
-					// Verify if in next clock the EPC is equal to PC - 4
-					// Verify if in next clock the memory is reading 254
-					// Maybe the 254 will be readed in the 3° clock
-
 					epc_write = 1'b1;
 					alu_src_a = 1'b0;
 					alu_src_b = 2'b01;
@@ -2756,9 +2633,6 @@ module CtrlUnit (
 
 
 				OVERFLOW_STEP_TWO: begin
-
-					// If the EPC isn't equal to PC - 4 set epc_write to 1
-					// to be written in the next clock
 
 					epc_write = 1'b0;
 					
@@ -2796,9 +2670,6 @@ module CtrlUnit (
 
 				OVERFLOW_STEP_THREE: begin
 
-					// If the memory_out has the value placed at byte in 253
-					// this state can be removed.
-
 					epc_write = 1'b0;
 					
 					alu_src_a = 1'b0;
@@ -2834,8 +2705,6 @@ module CtrlUnit (
 				end
 
 				OVERFLOW_STEP_FOUR: begin
-
-					// Verify if, in the next clock, PC has the value placed at byte in 254
 
 					pc_write = 1'b1;
 					pc_source = 3'b100;
@@ -2971,8 +2840,8 @@ module CtrlUnit (
 					shift_src_control = 1'b0;
 					load_size_control = 2'b00;
 					store_size_control = 2'b00;
-					shift_amount_control = 2'b00;
 					exceptions_control = 2'b00;
+					shift_amount_control = 2'b00;
 					
 					
 					state = FETCH_STEP_ONE;
