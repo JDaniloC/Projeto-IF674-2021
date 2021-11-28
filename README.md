@@ -45,10 +45,10 @@
 |    lh rt, offset(rs)   | 100001 | rs | rt |  offset  | rt ← halfword Mem[offset + rs] |
 |    lui rt, imediato    | 001111 |    | rt | imediato |       rt ← imediato << 16      |
 |    lw rt, offset(rs)   | 100011 | rs | rt |  offset  |      rt ← Mem[offset + rs]     |
-|    sb rt, offset(rs)   | 101000 | rs | rt |  offset  |   Mem[offset +rs] ← byte[rt]   |
-|    sh rt, offset(rs)   | 101001 | rs | rt |  offset  | Mem[offset +rs] ← halfword[rt] |
+|    sb rt, offset(rs)   | 101000 | rs | rt |  offset  |   Mem[offset + rs] ← byte[rt]  |
+|    sh rt, offset(rs)   | 101001 | rs | rt |  offset  | Mem[offset + rs] ← halfword[rt]|
 |  slti rt, rs, imediato | 001010 | rs | rt | imediato |   rt ← (rs < imediato) ?1 :0   |
-|    sw rt, offset(rs)   | 101011 | rs | rt |  offset  |      Mem[offset +rs] ← rt      |
+|    sw rt, offset(rs)   | 101011 | rs | rt |  offset  |      Mem[offset + rs] ← rt     |
 
 ### Instruções do tipo J
 
